@@ -338,6 +338,43 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
             Assert.That(childContainer.Resolve<IFooService>(), Is.SameAs(childContainer.Resolve<IFooService>()));
         }
+
+        [Test]
+        public void Can_configure_to_call_method_on_concrete_after_build_up()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x => x.AfterBuildUp<StartableService1>(s => s.Start()));
+
+            Assert.That(container.Resolve<StartableService1>().StartWasCalled);
+        }
+
+        [Test]
+        public void Can_configure_to_call_method_on_interface_after_build_up()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x =>
+                                     {
+                                         x.Register<IStartable, StartableService1>();
+                                         x.AfterBuildUp<IStartable>(s => s.Start());
+                                     });
+
+            Assert.That(container.Resolve<IStartable>().StartWasCalled);
+        }
+
+        [Test]
+        public void Can_configure_to_call_method_on_interface_after_build_up_2()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x =>
+                                     {
+                                         x.Register<IStartable, StartableService1>().WithName("1");
+                                         x.Register<IStartable, StartableService2>().WithName("2");
+                                         x.AfterBuildUp<IStartable>(s => s.Start());
+                                     });
+
+            Assert.That(container.Resolve<IStartable>("1").StartWasCalled);
+            Assert.That(container.Resolve<IStartable>("2").StartWasCalled);
+        }
     }
 
     public class FooRegistry : UnityRegistry
@@ -438,5 +475,31 @@ namespace UnityConfiguration
     {
         string SomeString { get; set; }
         IFooService FooService { get; set; }
+    }
+
+    public class StartableService1 : IStartable
+    {
+        public void Start()
+        {
+            StartWasCalled = true;
+        }
+
+        public bool StartWasCalled { get; set; }
+    }
+
+    public class StartableService2 : IStartable
+    {
+        public void Start()
+        {
+            StartWasCalled = true;
+        }
+
+        public bool StartWasCalled { get; set; }
+    }
+
+    public interface IStartable
+    {
+        void Start();
+        bool StartWasCalled { get; set; }
     }
 }

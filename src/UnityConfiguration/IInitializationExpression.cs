@@ -1,4 +1,6 @@
-﻿namespace UnityConfiguration
+﻿using System;
+
+namespace UnityConfiguration
 {
     public interface IInitializationExpression : IUnityRegistry
     {

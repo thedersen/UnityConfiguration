@@ -12,6 +12,7 @@ namespace UnityConfiguration
         LifetimeExpression<T> MakeSingleton<T>();
         ConfigurationExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
         ConfigurationExpression<T> SelectConstructor<T>(params Type[] args);
-        ExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();
+        ExtensionExpression AddExtension<T>() where T : UnityContainerExtension, new();
+        void AfterBuildUp<T>(Action<T> action) where T : class;
     }
 }
