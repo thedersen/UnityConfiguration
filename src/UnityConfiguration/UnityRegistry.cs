@@ -67,17 +67,18 @@ namespace UnityConfiguration
             return ConfigureCtorArgsFor<T>(args);
         }
 
-        public ExtensionExpression AddExtension<T>() where T : UnityContainerExtension, new()
+        public ExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new()
         {
-            var extensionExpression = new ExtensionExpression(new T());
+            var extensionExpression = new ExtensionExpression<T>();
             extensions.Add(extensionExpression);
             return extensionExpression;
         }
 
-        public void AfterBuildUp<T>(Action<T> action) where T : class
+        public AfterBuildUpExpression<T> AfterBuildingUp<T>() where T : class
         {
-            var extensionExpression = new ExtensionExpression(new AfterBuildUpExtension<T>(action));
-            extensions.Add(extensionExpression);
+            var afterBuildUpExpression = new AfterBuildUpExpression<T>();
+            extensions.Add(afterBuildUpExpression);
+            return afterBuildUpExpression;
         }
     }
 }

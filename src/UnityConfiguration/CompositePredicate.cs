@@ -11,7 +11,7 @@ namespace UnityConfiguration
         private Func<T, bool> matchesAny = x => true;
         private Func<T, bool> matchesNone = x => false;
 
-        public void Add(Func<T, bool> filter)
+        private void Add(Func<T, bool> filter)
         {
             matchesAll = x => filters.All(predicate => predicate(x));
             matchesAny = x => filters.Any(predicate => predicate(x));

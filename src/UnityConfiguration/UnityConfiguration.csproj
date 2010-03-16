@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddAllConvention.cs" />
+    <Compile Include="AfterBuildUpExpression.cs" />
     <Compile Include="AfterBuildUpExtension.cs" />
     <Compile Include="AssemblyScanner.cs" />
     <Compile Include="CompositeFilter.cs" />

@@ -2,18 +2,11 @@
 
 namespace UnityConfiguration
 {
-    public class ExtensionExpression : Expression
+    public class ExtensionExpression<T> : Expression where T : UnityContainerExtension, new()
     {
-        private readonly UnityContainerExtension extension;
-
-        public ExtensionExpression(UnityContainerExtension extension)
-        {
-            this.extension = extension;
-        }
-
         internal override void Execute(IUnityContainer container)
         {
-            container.AddExtension(extension);
+            container.AddNewExtension<T>();
         }
     }
 }

@@ -343,7 +343,7 @@ namespace UnityConfiguration
         public void Can_configure_to_call_method_on_concrete_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x => x.AfterBuildUp<StartableService1>(s => s.Start()));
+            container.Initialize(x => x.AfterBuildingUp<StartableService1>().Call(s => s.Start()));
 
             Assert.That(container.Resolve<StartableService1>().StartWasCalled);
         }
@@ -355,7 +355,7 @@ namespace UnityConfiguration
             container.Initialize(x =>
                                      {
                                          x.Register<IStartable, StartableService1>();
-                                         x.AfterBuildUp<IStartable>(s => s.Start());
+                                         x.AfterBuildingUp<IStartable>().Call(s => s.Start());
                                      });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
@@ -369,7 +369,7 @@ namespace UnityConfiguration
                                      {
                                          x.Register<IStartable, StartableService1>().WithName("1");
                                          x.Register<IStartable, StartableService2>().WithName("2");
-                                         x.AfterBuildUp<IStartable>(s => s.Start());
+                                         x.AfterBuildingUp<IStartable>().Call(s => s.Start());
                                      });
 
             Assert.That(container.Resolve<IStartable>("1").StartWasCalled);
@@ -384,8 +384,8 @@ namespace UnityConfiguration
                                      {
                                          x.Register<IStartable, StartableService1>();
                                          x.Register<IStoppable, StoppableService>();
-                                         x.AfterBuildUp<IStartable>(s => s.Start());
-                                         x.AfterBuildUp<IStoppable>(s => s.Stop());
+                                         x.AfterBuildingUp<IStartable>().Call(s => s.Start());
+                                         x.AfterBuildingUp<IStoppable>().Call(s => s.Stop());
                                      });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
