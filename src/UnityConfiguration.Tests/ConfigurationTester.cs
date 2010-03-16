@@ -375,6 +375,22 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IStartable>("1").StartWasCalled);
             Assert.That(container.Resolve<IStartable>("2").StartWasCalled);
         }
+
+        [Test]
+        public void Can_configure_to_call_method_on_several_interfaces_after_build_up()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x =>
+                                     {
+                                         x.Register<IStartable, StartableService1>();
+                                         x.Register<IStoppable, StoppableService>();
+                                         x.AfterBuildUp<IStartable>(s => s.Start());
+                                         x.AfterBuildUp<IStoppable>(s => s.Stop());
+                                     });
+
+            Assert.That(container.Resolve<IStartable>().StartWasCalled);
+            Assert.That(container.Resolve<IStoppable>().StopWasCalled);
+        }
     }
 
     public class FooRegistry : UnityRegistry
@@ -502,4 +518,22 @@ namespace UnityConfiguration
         void Start();
         bool StartWasCalled { get; set; }
     }
+
+    public class StoppableService : IStoppable
+    {
+        public void Stop()
+        {
+            StopWasCalled = true;
+        }
+
+        public bool StopWasCalled { get; set; }
+    }
+
+    public interface IStoppable
+    {
+        void Stop();
+        bool StopWasCalled { get; set; }
+    }
+
+
 }
