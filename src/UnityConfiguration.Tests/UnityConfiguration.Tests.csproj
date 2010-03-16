@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationTester.cs" />
     <Compile Include="DiagnosticsTester.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="OtherNamespace\ServiceInOtherNamespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

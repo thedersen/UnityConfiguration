@@ -51,6 +51,7 @@
     <Compile Include="CompositeFilter.cs" />
     <Compile Include="CompositePredicate.cs" />
     <Compile Include="ConfigurationExpression.cs" />
+    <Compile Include="DecoratorExtension.cs" />
     <Compile Include="Diagnostics\WhatDoIHaveExtensionMethod.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Expression.cs" />

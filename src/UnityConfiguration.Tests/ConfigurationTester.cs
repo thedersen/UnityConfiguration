@@ -391,6 +391,21 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
             Assert.That(container.Resolve<IStoppable>().StopWasCalled);
         }
+
+        [Test]
+        public void Can_decorate_services_after_build_up()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x =>
+                                     {
+                                         x.Register<IFooService, FooService>();
+                                         x.AfterBuildingUp<FooService>().DecorateWith(t => new FooDecorator(t));
+                                     });
+
+            var fooService = container.Resolve<IFooService>();
+            Assert.That(fooService, Is.InstanceOf<FooDecorator>());
+            Assert.That(fooService.As<FooDecorator>().InnerService, Is.InstanceOf<FooService>());
+        }
     }
 
     public class FooRegistry : UnityRegistry
@@ -415,6 +430,16 @@ namespace UnityConfiguration
 
     public class FooService : IFooService
     {
+    }
+
+    public class FooDecorator : IFooService
+    {
+        public IFooService InnerService { get; set; }
+
+        public FooDecorator(IFooService fooService)
+        {
+            InnerService = fooService;
+        }
     }
 
     public interface IBarService
