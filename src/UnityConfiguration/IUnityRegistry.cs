@@ -13,6 +13,6 @@ namespace UnityConfiguration
         ConfigurationExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
         ConfigurationExpression<T> SelectConstructor<T>(params Type[] args);
         ExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();
-        AfterBuildUpExpression<T> AfterBuildingUp<T>() where T : class;
+        PostBuildUpExpression<T> AfterBuildingUp<T>() where T : class;
     }
 }

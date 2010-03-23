@@ -5,7 +5,7 @@ using Microsoft.Practices.Unity.ObjectBuilder;
 
 namespace UnityConfiguration
 {
-    public class DecoratorExtension<T> : UnityContainerExtension
+    public class DecoratorExtension<T> : UnityContainerExtension where T : class
     {
         private readonly Func<T, object> func;
 
@@ -20,7 +20,7 @@ namespace UnityConfiguration
         }
     }
 
-    public class DecoratorStrategy<T> : BuilderStrategy
+    public class DecoratorStrategy<T> : BuilderStrategy where T : class
     {
         private readonly Func<T, object> func;
 
@@ -31,11 +31,10 @@ namespace UnityConfiguration
 
         public override void PostBuildUp(IBuilderContext context)
         {
-            if(context.BuildKey.Type.Equals(typeof(T)))
-            {
-                context.Existing = func((T) context.Existing);
-            }
+            var obj = context.Existing as T;
 
+            if (obj != null)
+                context.Existing = func(obj);
         }
     }
 }

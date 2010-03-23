@@ -34,13 +34,14 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_register_type()
+        public void Can_register_transient_type()
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Register<IBarService, BarService>().AsSingleton());
+            container.Initialize(x => x.Register<IBarService, BarService>());
 
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
+            Assert.That(container.Resolve<IBarService>(), Is.Not.SameAs(container.Resolve<IBarService>()));
         }
 
         [Test]
@@ -50,6 +51,7 @@ namespace UnityConfiguration
 
             container.Initialize(x => x.Register<IBarService, BarService>().AsSingleton());
 
+            Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
 
@@ -393,13 +395,28 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_decorate_services_after_build_up()
+        public void Can_decorate_concrete_service_after_build_up()
         {
             var container = new UnityContainer();
             container.Initialize(x =>
                                      {
                                          x.Register<IFooService, FooService>();
                                          x.AfterBuildingUp<FooService>().DecorateWith(t => new FooDecorator(t));
+                                     });
+
+            var fooService = container.Resolve<IFooService>();
+            Assert.That(fooService, Is.InstanceOf<FooDecorator>());
+            Assert.That(fooService.As<FooDecorator>().InnerService, Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_decorate_interface_after_build_up()
+        {
+            var container = new UnityContainer();
+            container.Initialize(x =>
+                                     {
+                                         x.Register<IFooService, FooService>();
+                                         x.AfterBuildingUp<IFooService>().DecorateWith(t => new FooDecorator(t));
                                      });
 
             var fooService = container.Resolve<IFooService>();
@@ -432,7 +449,7 @@ namespace UnityConfiguration
     {
     }
 
-    public class FooDecorator : IFooService
+    public class FooDecorator : IFooDecorator, IFooService
     {
         public IFooService InnerService { get; set; }
 
@@ -440,6 +457,10 @@ namespace UnityConfiguration
         {
             InnerService = fooService;
         }
+    }
+
+    public interface IFooDecorator
+    {
     }
 
     public interface IBarService
@@ -559,6 +580,4 @@ namespace UnityConfiguration
         void Stop();
         bool StopWasCalled { get; set; }
     }
-
-
 }

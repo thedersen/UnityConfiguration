@@ -74,9 +74,9 @@ namespace UnityConfiguration
             return extensionExpression;
         }
 
-        public AfterBuildUpExpression<T> AfterBuildingUp<T>() where T : class
+        public PostBuildUpExpression<T> AfterBuildingUp<T>() where T : class
         {
-            var afterBuildUpExpression = new AfterBuildUpExpression<T>();
+            var afterBuildUpExpression = new PostBuildUpExpression<T>();
             extensions.Add(afterBuildUpExpression);
             return afterBuildUpExpression;
         }
