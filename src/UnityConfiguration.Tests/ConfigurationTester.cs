@@ -122,6 +122,21 @@ namespace UnityConfiguration
                      }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().Count(), Is.EqualTo(2));
+            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.Not.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
+        }
+
+        [Test]
+        public void Can_scan_using_the_add_all_as_singleton_convention_and()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With(new AddAllAsSingletonConvention(typeof(IHaveManyImplementations)));
+            }));
+
+            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
         }
 
         [Test]
