@@ -6,10 +6,17 @@ namespace UnityConfiguration
     {
         private Type interfaceType;
         private bool asSingleton;
+        private Func<Type, string> getName = t => t.Name;
 
-        public ILifetimePolicyExpression TypesImplementing<T>()
+        public AddAllConvention TypesImplementing<T>()
         {
             interfaceType = typeof(T);
+            return this;
+        }
+
+        public AddAllConvention WithName(Func<Type, string> func)
+        {
+            getName = func;
             return this;
         }
 
@@ -24,11 +31,11 @@ namespace UnityConfiguration
             {
                 if (asSingleton)
                 {
-                    registry.Register(interfaceType, type).WithName(type.Name).AsSingleton();
+                    registry.Register(interfaceType, type).WithName(getName(type)).AsSingleton();
                 }
                 else
                 {
-                    registry.Register(interfaceType, type).WithName(type.Name);
+                    registry.Register(interfaceType, type).WithName(getName(type));
                 }
 
             }

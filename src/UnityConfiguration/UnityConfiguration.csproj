@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddAllAsSingletonConvention.cs" />
     <Compile Include="AddAllConvention.cs" />
     <Compile Include="PostBuildUpExpression.cs" />
     <Compile Include="PostBuildUpActionExtension.cs" />

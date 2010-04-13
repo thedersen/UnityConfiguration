@@ -126,6 +126,20 @@ namespace UnityConfiguration
         }
 
         [Test]
+        public void Can_scan_using_the_add_all_convention_and_override_the_default_naming_convention()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+                     {
+                         scan.AssemblyContaining<FooRegistry>();
+                         scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test");
+                     }));
+
+            Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.Not.Null);
+        }
+
+        [Test]
         public void Can_scan_using_the_add_all_convention_and_add_all_as_singletons()
         {
             var container = new UnityContainer();
@@ -137,6 +151,20 @@ namespace UnityConfiguration
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
+        }
+
+        [Test]
+        public void Can_scan_using_the_add_all_convention_add_all_as_singletons_and_override_the_default_naming_convention()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test").AsSingleton();
+            }));
+
+            Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.SameAs(container.Resolve<IHaveManyImplementations>("test")));
         }
 
         [Test]
