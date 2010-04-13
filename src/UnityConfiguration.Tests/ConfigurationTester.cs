@@ -126,14 +126,14 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_scan_using_the_add_all_as_singleton_convention_and()
+        public void Can_scan_using_the_add_all_convention_and_add_all_as_singletons()
         {
             var container = new UnityContainer();
 
             container.Initialize(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllAsSingletonConvention>().TypesImplementing<IHaveManyImplementations>();
+                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().AsSingleton();
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
