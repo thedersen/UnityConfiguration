@@ -8,7 +8,7 @@ namespace UnityConfiguration
     public class AssemblyScanner : IAssemblyScanner
     {
         private readonly List<Assembly> assemblies = new List<Assembly>();
-        private readonly List<IRegistrationConvention> conventions = new List<IRegistrationConvention>();
+        private readonly List<RegistrationConvention> conventions = new List<RegistrationConvention>();
         private readonly CompositeFilter<Type> filter = new CompositeFilter<Type>();
 
         public void AssemblyContaining<T>()
@@ -16,14 +16,12 @@ namespace UnityConfiguration
             assemblies.Add(typeof(T).Assembly);
         }
 
-        public void With<TConvention>() where TConvention : IRegistrationConvention, new()
+        public TConvention With<TConvention>() where TConvention : RegistrationConvention, new()
         {
-            conventions.Add(new TConvention());
-        }
-
-        public void With(IRegistrationConvention convention)
-        {
+            var convention = new TConvention();
             conventions.Add(convention);
+
+            return convention;
         }
 
         public void Exclude(Func<Type, bool> exclude)

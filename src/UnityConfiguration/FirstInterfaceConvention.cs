@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace UnityConfiguration
 {
-    public class FirstInterfaceConvention : IRegistrationConvention
+    public class FirstInterfaceConvention : RegistrationConvention
     {
-        public void Process(Type type, IUnityRegistry registry)
+        internal override void Process(Type type, IUnityRegistry registry)
         {
             if (!type.IsConcrete() || !type.CanBeCreated()) 
                 return;

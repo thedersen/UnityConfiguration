@@ -2,16 +2,16 @@ using System;
 
 namespace UnityConfiguration
 {
-    public class AddAllConvention : IRegistrationConvention
+    public class AddAllConvention : RegistrationConvention
     {
-        private readonly Type interfaceType;
+        private Type interfaceType;
 
-        public AddAllConvention(Type interfaceType)
+        public void TypesImplementing<T>()
         {
-            this.interfaceType = interfaceType;
+            interfaceType = typeof (T);
         }
-
-        public void Process(Type type, IUnityRegistry registry)
+        
+        internal override void Process(Type type, IUnityRegistry registry)
         {
             if (type.CanBeCastTo(interfaceType) && type.CanBeCreated())
             {

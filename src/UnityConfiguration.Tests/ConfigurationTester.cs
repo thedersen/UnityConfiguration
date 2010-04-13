@@ -118,7 +118,7 @@ namespace UnityConfiguration
             container.Initialize(x => x.Scan(scan =>
                      {
                          scan.AssemblyContaining<FooRegistry>();
-                         scan.With(new AddAllConvention(typeof(IHaveManyImplementations)));
+                         scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
                      }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().Count(), Is.EqualTo(2));
@@ -133,7 +133,7 @@ namespace UnityConfiguration
             container.Initialize(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With(new AddAllAsSingletonConvention(typeof(IHaveManyImplementations)));
+                scan.With<AddAllAsSingletonConvention>().TypesImplementing<IHaveManyImplementations>();
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
@@ -148,7 +148,7 @@ namespace UnityConfiguration
                      {
                          scan.AssemblyContaining<FooRegistry>();
                          scan.With<FirstInterfaceConvention>();
-                         scan.With(new AddAllConvention(typeof(IHaveManyImplementations)));
+                         scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
                      }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());

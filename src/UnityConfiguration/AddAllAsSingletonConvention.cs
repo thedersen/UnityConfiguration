@@ -5,16 +5,16 @@ using System.Text;
 
 namespace UnityConfiguration
 {
-    public class AddAllAsSingletonConvention : IRegistrationConvention
+    public class AddAllAsSingletonConvention : RegistrationConvention
     {
-        private readonly Type interfaceType;
+        private Type interfaceType;
 
-        public AddAllAsSingletonConvention(Type interfaceType)
+        public void TypesImplementing<T>()
         {
-            this.interfaceType = interfaceType;
+            interfaceType = typeof(T);
         }
-
-        public void Process(Type type, IUnityRegistry registry)
+    
+        internal override void Process(Type type, IUnityRegistry registry)
         {
             if (type.CanBeCastTo(interfaceType) && type.CanBeCreated())
             {
