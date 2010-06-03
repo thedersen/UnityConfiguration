@@ -47,11 +47,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationTester.cs" />
-    <Compile Include="DiagnosticsTester.cs" />
+    <Compile Include="ConfigurationTests.cs" />
+    <Compile Include="Diagnostics\DiagnosticsTester.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="OtherNamespace\ServiceInOtherNamespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AnotherMessage.cs" />
+    <Compile Include="Services\AnotherMessageHandler.cs" />
+    <Compile Include="Services\BarRegistry.cs" />
+    <Compile Include="Services\BarService.cs" />
+    <Compile Include="Services\FooDecorator.cs" />
+    <Compile Include="Services\FooRegistry.cs" />
+    <Compile Include="Services\FooService.cs" />
+    <Compile Include="Services\IBarService.cs" />
+    <Compile Include="Services\IFooDecorator.cs" />
+    <Compile Include="Services\IFooService.cs" />
+    <Compile Include="Services\IHandler.cs" />
+    <Compile Include="Services\IHaveManyImplementations.cs" />
+    <Compile Include="Services\IMapper.cs" />
+    <Compile Include="Services\Implementation1.cs" />
+    <Compile Include="Services\Implementation2.cs" />
+    <Compile Include="Services\IServiceWithCtorArgs.cs" />
+    <Compile Include="Services\IStartable.cs" />
+    <Compile Include="Services\IStoppable.cs" />
+    <Compile Include="Services\Message.cs" />
+    <Compile Include="Services\MessageHandler.cs" />
+    <Compile Include="Services\MessageToAnotherMessageMapper.cs" />
+    <Compile Include="Services\OtherNamespace\IServiceInOtherNamespace.cs" />
+    <Compile Include="Services\OtherNamespace\ServiceInOtherNamespace.cs" />
+    <Compile Include="Services\ServiceWithCtorArgs.cs" />
+    <Compile Include="Services\StartableService1.cs" />
+    <Compile Include="Services\StartableService2.cs" />
+    <Compile Include="Services\StoppableService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnityConfiguration\UnityConfiguration.csproj">

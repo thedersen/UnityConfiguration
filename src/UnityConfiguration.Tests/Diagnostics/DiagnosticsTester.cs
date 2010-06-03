@@ -1,8 +1,8 @@
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
-using UnityConfiguration.Diagnostics;
+using UnityConfiguration.Services;
 
-namespace UnityConfiguration.Tests
+namespace UnityConfiguration.Diagnostics
 {
     [TestFixture]
     public class DiagnosticsTester

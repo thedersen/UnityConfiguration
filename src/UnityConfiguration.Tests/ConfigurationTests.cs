@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
-using UnityConfiguration.OtherNamespace;
+using UnityConfiguration.Services;
+using UnityConfiguration.Services.OtherNamespace;
 
 namespace UnityConfiguration
 {
     [TestFixture]
-    public class Configuration_tester
+    public class ConfigurationTests
     {
         [Test]
         public void Can_initalize_container_with_one_registry()
@@ -297,7 +298,7 @@ namespace UnityConfiguration
             {
                 scan.AssemblyContaining<FooRegistry>();
                 scan.With<FirstInterfaceConvention>();
-                scan.IncludeNamespace("UnityConfiguration.OtherNamespace");
+                scan.IncludeNamespace("UnityConfiguration.Services.OtherNamespace");
             }));
 
             Assert.Throws<ResolutionFailedException>(() => container.Resolve<IFooService>());
@@ -466,161 +467,5 @@ namespace UnityConfiguration
             Assert.That(fooService, Is.InstanceOf<FooDecorator>());
             Assert.That(fooService.As<FooDecorator>().InnerService, Is.InstanceOf<FooService>());
         }
-    }
-
-    public class FooRegistry : UnityRegistry
-    {
-        public FooRegistry()
-        {
-            Register<IFooService, FooService>();
-        }
-    }
-
-    public class BarRegistry : UnityRegistry
-    {
-        public BarRegistry()
-        {
-            Register<IBarService, BarService>();
-        }
-    }
-
-    public interface IFooService
-    {
-    }
-
-    public class FooService : IFooService
-    {
-    }
-
-    public class FooDecorator : IFooDecorator, IFooService
-    {
-        public IFooService InnerService { get; set; }
-
-        public FooDecorator(IFooService fooService)
-        {
-            InnerService = fooService;
-        }
-    }
-
-    public interface IFooDecorator
-    {
-    }
-
-    public interface IBarService
-    {
-    }
-
-    public class BarService : IBarService, IFooService
-    {
-    }
-
-    public interface IHaveManyImplementations
-    {
-
-    }
-
-    public class Implementation1 : IHaveManyImplementations
-    {
-    }
-
-    public class Implementation2 : IHaveManyImplementations
-    {
-    }
-
-    public interface IHandler<T>
-    {
-    }
-
-    public class MessageHandler : IHandler<Message>
-    {
-    }
-
-    public class AnotherMessageHandler : IHandler<AnotherMessage>
-    {
-    }
-
-    public class AnotherMessage
-    {
-    }
-
-    public class Message
-    {
-    }
-
-    public interface IMapper<TFrom, TTo>
-    {
-    }
-
-    public class MessageToAnotherMessageMapper : IMapper<Message, AnotherMessage>
-    {
-    }
-
-    public class ServiceWithCtorArgs : IServiceWithCtorArgs
-    {
-        public string SomeString { get; set; }
-        public IFooService FooService { get; set; }
-
-        public ServiceWithCtorArgs()
-        {
-        }
-
-        public ServiceWithCtorArgs(IFooService fooService)
-        {
-            FooService = fooService;
-        }
-
-        public ServiceWithCtorArgs(string someString, IFooService fooService)
-        {
-            SomeString = someString;
-            FooService = fooService;
-        }
-    }
-
-    public interface IServiceWithCtorArgs
-    {
-        string SomeString { get; set; }
-        IFooService FooService { get; set; }
-    }
-
-    public class StartableService1 : IStartable
-    {
-        public void Start()
-        {
-            StartWasCalled = true;
-        }
-
-        public bool StartWasCalled { get; set; }
-    }
-
-    public class StartableService2 : IStartable
-    {
-        public void Start()
-        {
-            StartWasCalled = true;
-        }
-
-        public bool StartWasCalled { get; set; }
-    }
-
-    public interface IStartable
-    {
-        void Start();
-        bool StartWasCalled { get; set; }
-    }
-
-    public class StoppableService : IStoppable
-    {
-        public void Stop()
-        {
-            StopWasCalled = true;
-        }
-
-        public bool StopWasCalled { get; set; }
-    }
-
-    public interface IStoppable
-    {
-        void Stop();
-        bool StopWasCalled { get; set; }
     }
 }
