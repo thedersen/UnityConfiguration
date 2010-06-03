@@ -9,7 +9,8 @@ namespace UnityConfiguration
         RegistrationExpression Register(Type typeFrom, Type typeTo);
         RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom;
         FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, object> factoryDelegate);
-        LifetimeExpression<T> MakeSingleton<T>();
+        LifetimeExpression MakeSingleton<T>();
+        LifetimeExpression MakeSingleton<T>(string namedInstance);
         ConfigurationExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
         ConfigurationExpression<T> SelectConstructor<T>(params Type[] args);
         ExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();

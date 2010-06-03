@@ -46,9 +46,14 @@ namespace UnityConfiguration
             return factoryRegistrationExpression;
         }
 
-        public LifetimeExpression<T> MakeSingleton<T>()
+        public LifetimeExpression MakeSingleton<T>()
         {
-            var lifetimeExpression = new LifetimeExpression<T>(new ContainerControlledLifetimeManager());
+            return MakeSingleton<T>(null);
+        }
+
+        public LifetimeExpression MakeSingleton<T>(string namedInstance)
+        {
+            var lifetimeExpression = new LifetimeExpression(typeof(T), new ContainerControlledLifetimeManager(), namedInstance);
             configurations.Add(lifetimeExpression);
 
             return lifetimeExpression;

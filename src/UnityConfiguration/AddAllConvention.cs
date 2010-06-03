@@ -37,7 +37,6 @@ namespace UnityConfiguration
                 {
                     registry.Register(interfaceType, type).WithName(getName(type));
                 }
-
             }
         }
     }

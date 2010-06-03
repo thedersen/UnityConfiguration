@@ -3,7 +3,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class RegistrationExpression : Expression, ILifetimePolicyExpression
+    public class RegistrationExpression : Expression, ILifetimePolicyExpression, INamedRegistrationExpression
     {
         private readonly Type typeFrom;
         private readonly Type typeTo;
@@ -32,5 +32,10 @@ namespace UnityConfiguration
         {
             container.RegisterType(typeFrom, typeTo, name, lifetimeManager);
         }
+    }
+
+    public interface INamedRegistrationExpression
+    {
+
     }
 }
