@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using System.Text;
-using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration.Diagnostics
@@ -10,36 +8,28 @@ namespace UnityConfiguration.Diagnostics
     {
         public static string WhatDoIHave(this IUnityContainer container)
         {
-            
-            
             var stringBuilder = new StringBuilder();
-            container.Configure<IWhatDoIHave>().Print(stringBuilder);
+
+            var registrations = container.Registrations.Select(ToRegistrationString).ToList();
+            registrations.Sort();
+            registrations.ForEach(s => stringBuilder.AppendLine(s));
 
             return stringBuilder.ToString();
         }
-    }
 
-    public interface IWhatDoIHave : IUnityContainerExtensionConfigurator
-    {
-        void Print(StringBuilder stringBuilder);
-    }
-
-    public class DiagnosticsExtension : UnityContainerExtension, IWhatDoIHave
-    {
-        private readonly StringBuilder stringBuilder = new StringBuilder();
-        protected override void Initialize()
+        private static string ToRegistrationString(ContainerRegistration registration)
         {
-            Context.Registering += Context_Registering;
+            return registration.RegisteredType.FullName + " - " + registration.MappedToType.FullName + Named(registration) + AsSingleton(registration);
         }
 
-        void Context_Registering(object sender, RegisterEventArgs e)
+        private static string Named(ContainerRegistration registration)
         {
-            stringBuilder.AppendFormat("{0} - {1} - {2}", e.TypeFrom, e.TypeTo, e.Name);
+            return registration.Name != null ? string.Format(" named \"{0}\"", registration.Name) : null;
         }
 
-        public void Print(StringBuilder sb)
+        private static string AsSingleton(ContainerRegistration registration)
         {
-            sb.Append(stringBuilder.ToString());
+            return registration.LifetimeManager != null ? " as Singleton" : null;
         }
     }
 }
