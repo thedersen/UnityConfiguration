@@ -10,6 +10,16 @@ namespace UnityConfiguration
     public class ConfigurationTests
     {
         [Test]
+        public void Can_resolve_the_container_without_registering_it()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => {});
+            
+            Assert.That(container.Resolve<IUnityContainer>(), Is.SameAs(container));
+        }
+
+        [Test]
         public void Can_initalize_container_with_one_registry()
         {
             var container = new UnityContainer();
