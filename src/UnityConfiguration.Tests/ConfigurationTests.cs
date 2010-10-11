@@ -259,7 +259,7 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_exclude_namespoace_containing_type()
+        public void Can_exclude_namespace_containing_type()
         {
             var container = new UnityContainer();
 
@@ -274,7 +274,7 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_include_namespoace_containing_type()
+        public void Can_include_namespace_containing_type()
         {
             var container = new UnityContainer();
 
@@ -290,7 +290,7 @@ namespace UnityConfiguration
         }
 
         [Test]
-        public void Can_include_namespoace()
+        public void Can_include_namespace()
         {
             var container = new UnityContainer();
 
