@@ -63,6 +63,7 @@
     <Compile Include="Services\IFooService.cs" />
     <Compile Include="Services\IHandler.cs" />
     <Compile Include="Services\IHaveManyImplementations.cs" />
+    <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\IMapper.cs" />
     <Compile Include="Services\Implementation1.cs" />
     <Compile Include="Services\Implementation2.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Services\Message.cs" />
     <Compile Include="Services\MessageHandler.cs" />
     <Compile Include="Services\MessageToAnotherMessageMapper.cs" />
+    <Compile Include="Services\NullLogger.cs" />
     <Compile Include="Services\OtherNamespace\IServiceInOtherNamespace.cs" />
     <Compile Include="Services\OtherNamespace\ServiceInOtherNamespace.cs" />
     <Compile Include="Services\ServiceWithCtorArgs.cs" />
