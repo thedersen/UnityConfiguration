@@ -5,15 +5,15 @@ namespace UnityConfiguration
 {
     public class PostBuildUpExpression<T> : Expression where T : class
     {
-        private Action<T> action;
-        private Func<T, object> decoratorFunc;
+        private Action<IUnityContainer, T> action;
+        private Func<IUnityContainer, T, object> decoratorFunc;
 
-        public void Call(Action<T> action)
+        public void Call(Action<IUnityContainer, T> action)
         {
             this.action = action;
         }
 
-        public void DecorateWith(Func<T, object> func)
+        public void DecorateWith(Func<IUnityContainer, T, object> func)
         {
             decoratorFunc = func;
         }
