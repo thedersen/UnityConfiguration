@@ -210,6 +210,20 @@ namespace UnityConfiguration
         }
 
         [Test]
+        public void Can_configure_interfaces_as_singletons()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x =>
+                {
+                    x.Register<IBarService, BarService>();
+                    x.MakeSingleton<IBarService>();
+                });
+
+            Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
+        }
+
+        [Test]
         public void Can_connect_implementations_to_open_generic_types()
         {
             var container = new UnityContainer();

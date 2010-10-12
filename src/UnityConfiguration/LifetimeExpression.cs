@@ -23,7 +23,18 @@ namespace UnityConfiguration
 
         internal override void Execute(IUnityContainer container)
         {
-            container.RegisterType(type, namedInstance, lifetimeManager);
+            if (type.IsConcrete())
+            {
+                container.RegisterType(type, namedInstance, lifetimeManager);
+            }
+            else
+            {
+                container.Registrations.ForEach(c =>
+                {
+                    if (c.RegisteredType == type)
+                        container.RegisterType(c.MappedToType, namedInstance, lifetimeManager);
+                });
+            }
         }
     }
 }
