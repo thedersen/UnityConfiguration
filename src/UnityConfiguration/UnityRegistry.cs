@@ -53,7 +53,7 @@ namespace UnityConfiguration
 
         public LifetimeExpression MakeSingleton<T>(string namedInstance)
         {
-            var lifetimeExpression = new LifetimeExpression(typeof(T), new ContainerControlledLifetimeManager(), namedInstance);
+            var lifetimeExpression = new LifetimeExpression(typeof(T), () => new ContainerControlledLifetimeManager(), namedInstance);
             configurations.Add(lifetimeExpression);
 
             return lifetimeExpression;

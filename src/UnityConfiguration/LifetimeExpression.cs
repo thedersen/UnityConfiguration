@@ -6,15 +6,10 @@ namespace UnityConfiguration
     public class LifetimeExpression : Expression
     {
         private readonly Type type;
-        private readonly LifetimeManager lifetimeManager;
+        private readonly Func<LifetimeManager> lifetimeManager;
         private readonly string namedInstance;
-
-        public LifetimeExpression(Type type, LifetimeManager lifetimeManager)
-            : this(type, lifetimeManager, null)
-        {
-        }
-
-        public LifetimeExpression(Type type, LifetimeManager lifetimeManager, string namedInstance)
+        
+        public LifetimeExpression(Type type, Func<LifetimeManager> lifetimeManager, string namedInstance)
         {
             this.type = type;
             this.lifetimeManager = lifetimeManager;
@@ -25,14 +20,14 @@ namespace UnityConfiguration
         {
             if (type.IsConcrete())
             {
-                container.RegisterType(type, namedInstance, lifetimeManager);
+                container.RegisterType(type, namedInstance, lifetimeManager());
             }
             else
             {
                 container.Registrations.ForEach(c =>
                 {
                     if (c.RegisteredType == type)
-                        container.RegisterType(c.MappedToType, namedInstance, lifetimeManager);
+                        container.RegisterType(c.MappedToType, c.Name, lifetimeManager());
                 });
             }
         }

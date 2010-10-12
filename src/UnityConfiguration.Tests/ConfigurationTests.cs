@@ -14,8 +14,8 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => {});
-            
+            container.Initialize(x => { });
+
             Assert.That(container.Resolve<IUnityContainer>(), Is.SameAs(container));
         }
 
@@ -223,6 +223,26 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
 
+
+        [Test]
+        public void Can_configure_interfaces_as_singletons_2()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x =>
+            {
+                x.Scan(scan =>
+                {
+                    scan.AssemblyContaining<FooRegistry>();
+                    scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
+                });
+                x.MakeSingleton<IHaveManyImplementations>();
+            });
+
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation2"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation2")));
+        }
+
         [Test]
         public void Can_connect_implementations_to_open_generic_types()
         {
@@ -403,7 +423,7 @@ namespace UnityConfiguration
 
             IUnityContainer childContainer = container.CreateChildContainer();
             childContainer.Initialize(x => x.MakeSingleton<FooService>());
-            
+
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
             Assert.That(childContainer.Resolve<IFooService>(), Is.SameAs(childContainer.Resolve<IFooService>()));
