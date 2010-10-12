@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using UnityConfiguration.Services;
 using UnityConfiguration.Services.OtherNamespace;
+using UnityConfiguration.UserInterface;
 
 namespace UnityConfiguration
 {
@@ -537,6 +538,21 @@ namespace UnityConfiguration
                                      });
 
             Assert.That(container.Resolve<FooService>().Logger, Is.Not.Null);
+        }
+        
+        [Test]
+        [Ignore("Not done")]
+        public void Can_add_partial_classes_when_scanning()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>();
+            }));
+
+            Assert.That(container.Resolve<IMyView>(), Is.InstanceOf<MyView>());
         }
     }
 }

@@ -42,6 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -81,6 +83,13 @@
     <Compile Include="Services\StartableService1.cs" />
     <Compile Include="Services\StartableService2.cs" />
     <Compile Include="Services\StoppableService.cs" />
+    <Compile Include="UserInterface\IMyView.cs" />
+    <Compile Include="UserInterface\MyView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserInterface\MyView.Designer.cs">
+      <DependentUpon>MyView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UnityConfiguration\UnityConfiguration.csproj">
