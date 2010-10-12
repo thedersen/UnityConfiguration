@@ -40,5 +40,10 @@ namespace UnityConfiguration
 
             return false;
         }
+
+        public static bool ImplementsInterface(this Type type, Type implements)
+        {
+            return implements.IsInterface && type.GetInterface(implements.Name) != null;
+        }
     }
 }

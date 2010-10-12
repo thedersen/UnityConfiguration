@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using UnityConfiguration.Services;
@@ -541,8 +542,21 @@ namespace UnityConfiguration
         }
         
         [Test]
-        [Ignore("Not done")]
-        public void Can_add_partial_classes_when_scanning()
+        public void Can_ignore_base_classes_when_scanning_with_first_interface_convention()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>().IgnoreBaseTypes();
+            }));
+
+            Assert.That(container.Resolve<IMyView>(), Is.InstanceOf<MyView>());
+        }
+        
+        [Test]
+        public void Includes_base_classes_when_scanning_with_first_interface_convention()
         {
             var container = new UnityContainer();
 
@@ -552,7 +566,7 @@ namespace UnityConfiguration
                 scan.With<FirstInterfaceConvention>();
             }));
 
-            Assert.That(container.Resolve<IMyView>(), Is.InstanceOf<MyView>());
+            Assert.That(container.Resolve<IComponent>(), Is.InstanceOf<MyView>());
         }
     }
 }
