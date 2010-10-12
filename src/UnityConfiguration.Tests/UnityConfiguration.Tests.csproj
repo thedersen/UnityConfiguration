@@ -50,10 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationTests.cs" />
+    <Compile Include="AddAllConventionTests.cs" />
+    <Compile Include="ConstructorConfigurationTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTests.cs" />
+    <Compile Include="ExploratoryTests.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FilterTests.cs" />
+    <Compile Include="FirstInterfaceConventionTests.cs" />
+    <Compile Include="LifetimeManagementTests.cs" />
+    <Compile Include="OpenGenericTests.cs" />
+    <Compile Include="PostBuildUpActionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyInjectionTests.cs" />
+    <Compile Include="RegistryTests.cs" />
+    <Compile Include="ScanningTests.cs" />
     <Compile Include="Services\AnotherMessage.cs" />
     <Compile Include="Services\AnotherMessageHandler.cs" />
     <Compile Include="Services\BarRegistry.cs" />
@@ -83,6 +93,7 @@
     <Compile Include="Services\StartableService1.cs" />
     <Compile Include="Services\StartableService2.cs" />
     <Compile Include="Services\StoppableService.cs" />
+    <Compile Include="TypeRegistrationTests.cs" />
     <Compile Include="UserInterface\IMyView.cs" />
     <Compile Include="UserInterface\MyView.cs">
       <SubType>UserControl</SubType>

@@ -7,7 +7,7 @@ namespace UnityConfiguration
     {
         private bool ignoreBaseTypes;
 
-        public void IgnoreBaseTypes()
+        public void IgnoreInterfacesOnBaseTypes()
         {
             ignoreBaseTypes = true;
         }
