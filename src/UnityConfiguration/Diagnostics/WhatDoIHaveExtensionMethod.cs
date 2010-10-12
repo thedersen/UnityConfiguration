@@ -29,7 +29,7 @@ namespace UnityConfiguration.Diagnostics
 
         private static string AsSingleton(ContainerRegistration registration)
         {
-            return registration.LifetimeManager != null ? " as Singleton" : null;
+            return registration.LifetimeManager != null ? " with " + registration.LifetimeManager.GetType().Name : null;
         }
     }
 }

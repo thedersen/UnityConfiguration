@@ -35,7 +35,10 @@ namespace UnityConfiguration
 
         public static bool IsInNamespace(this Type type, string @namespace)
         {
-            return type.Namespace.StartsWith(@namespace);
+            if (type.Namespace != null) 
+                return type.Namespace.StartsWith(@namespace);
+
+            return false;
         }
     }
 }
