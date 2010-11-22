@@ -38,7 +38,7 @@ namespace UnityConfiguration
             return Register(typeof (TFrom), typeof (TTo));
         }
 
-        public FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, object> factoryDelegate)
+        public FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate)
         {
             var factoryRegistrationExpression = new FactoryRegistrationExpression<TFrom>(factoryDelegate);
             registrations.Add(factoryRegistrationExpression);

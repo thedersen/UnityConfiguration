@@ -5,10 +5,10 @@ namespace UnityConfiguration
 {
     public class FactoryRegistrationExpression<TFrom> : Expression
     {
-        private readonly Func<IUnityContainer, object> factoryDelegate;
+        private readonly Func<IUnityContainer, TFrom> factoryDelegate;
         private string name;
 
-        public FactoryRegistrationExpression(Func<IUnityContainer, object> factoryDelegate)
+        public FactoryRegistrationExpression(Func<IUnityContainer, TFrom> factoryDelegate)
         {
             this.factoryDelegate = factoryDelegate;
         }
@@ -20,7 +20,7 @@ namespace UnityConfiguration
 
         internal override void Execute(IUnityContainer container)
         {
-            container.RegisterType<TFrom>(name, new InjectionFactory(factoryDelegate));
+            container.RegisterType<TFrom>(name, new InjectionFactory(c => (object)factoryDelegate(c)));
         }
     }
 }
