@@ -2,7 +2,7 @@ using System;
 
 namespace UnityConfiguration
 {
-    public class AddAllConvention : RegistrationConvention, ILifetimePolicyExpression
+    public class AddAllConvention : IRegistrationConvention, ILifetimePolicyExpression
     {
         private bool asSingleton;
         private Func<Type, string> getName = t => t.Name;
@@ -25,7 +25,7 @@ namespace UnityConfiguration
             return this;
         }
 
-        internal override void Process(Type type, IUnityRegistry registry)
+        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
         {
             if (type.CanBeCastTo(interfaceType) && type.CanBeCreated())
             {

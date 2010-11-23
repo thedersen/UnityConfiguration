@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class SetAllPropertiesConvention : RegistrationConvention
+    public class SetAllPropertiesConvention : IRegistrationConvention
     {
         private Type interfaceType;
 
@@ -15,7 +15,7 @@ namespace UnityConfiguration
             interfaceType = typeof (T);
         }
 
-        internal override void Process(Type type, IUnityRegistry registry)
+        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
         {
             IEnumerable<PropertyInfo> properties =
                 type.GetProperties().Where(p => p.CanWrite && p.PropertyType == interfaceType);

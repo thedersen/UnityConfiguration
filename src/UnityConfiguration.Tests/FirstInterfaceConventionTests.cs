@@ -15,10 +15,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Configure(x => x.Scan(scan =>
-                                                 {
-                                                     scan.AssemblyContaining<FooRegistry>();
-                                                     scan.With<FirstInterfaceConvention>().IgnoreInterfacesOnBaseTypes();
-                                                 }));
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>().IgnoreInterfacesOnBaseTypes();
+            }));
 
             Assert.That(container.Resolve<IMyView>(), Is.InstanceOf<MyView>());
         }
@@ -29,10 +29,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Configure(x => x.Scan(scan =>
-                                                 {
-                                                     scan.AssemblyContaining<FooRegistry>();
-                                                     scan.With<FirstInterfaceConvention>();
-                                                 }));
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>();
+            }));
 
             Assert.That(container.Resolve<IComponent>(), Is.InstanceOf<MyView>());
         }
@@ -43,10 +43,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Configure(x => x.Scan(scan =>
-                                                 {
-                                                     scan.AssemblyContaining<FooRegistry>();
-                                                     scan.With<FirstInterfaceConvention>();
-                                                 }));
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>();
+            }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());

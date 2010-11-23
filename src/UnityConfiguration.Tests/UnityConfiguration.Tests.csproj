@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AddAllConventionTests.cs" />
     <Compile Include="ConstructorConfigurationTests.cs" />
+    <Compile Include="CustomConventionTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTests.cs" />
     <Compile Include="ExploratoryTests.cs" />
     <Compile Include="Extensions.cs" />

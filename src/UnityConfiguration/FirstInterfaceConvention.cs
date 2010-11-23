@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UnityConfiguration
 {
-    public class FirstInterfaceConvention : RegistrationConvention
+    public class FirstInterfaceConvention : IRegistrationConvention
     {
         private bool ignoreBaseTypes;
 
@@ -12,7 +12,7 @@ namespace UnityConfiguration
             ignoreBaseTypes = true;
         }
 
-        internal override void Process(Type type, IUnityRegistry registry)
+        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
         {
             if (!type.IsConcrete() || !type.CanBeCreated())
                 return;
