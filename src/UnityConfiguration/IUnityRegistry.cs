@@ -8,7 +8,7 @@ namespace UnityConfiguration
         void Scan(Action<IAssemblyScanner> action);
         RegistrationExpression Register(Type typeFrom, Type typeTo);
         RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom;
-        FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, object> factoryDelegate);
+        FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate);
         LifetimeExpression MakeSingleton<T>();
         LifetimeExpression MakeSingleton<T>(string namedInstance);
         ConfigurationExpression<T> ConfigureCtorArgsFor<T>(params object[] args);

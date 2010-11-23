@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
 using UnityConfiguration.Services;
@@ -67,6 +68,17 @@ namespace UnityConfiguration
             container.Initialize(x => x.Register<IBarService>(c => myService).WithName("name"));
 
             Assert.That(container.Resolve<IBarService>("name"), Is.SameAs(myService));
+        }
+        
+        [Test]
+        public void Can_register_a_func_with_parameters()
+        {
+            var container = new UnityContainer();
+
+            var myService = new BarService();
+            container.Initialize(x => x.Register<Func<int, IBarService>>(c => i => myService));
+
+            Assert.That(container.Resolve<Func<int, IBarService>>()(1), Is.SameAs(myService));
         }
     }
 }
