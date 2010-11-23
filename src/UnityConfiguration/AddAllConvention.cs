@@ -8,14 +8,10 @@ namespace UnityConfiguration
         private Func<Type, string> getName = t => t.Name;
         private Type interfaceType;
 
-        #region ILifetimePolicyExpression Members
-
         public void AsSingleton()
         {
             asSingleton = true;
         }
-
-        #endregion
 
         public AddAllConvention TypesImplementing<T>()
         {

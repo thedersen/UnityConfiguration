@@ -12,11 +12,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
-                                                 {
-                                                     scan.AssemblyContaining<FooRegistry>();
-                                                     scan.With<FirstInterfaceConvention>();
-                                                 }));
+            container.Configure(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>();
+            }));
 
             Assert.That(container.Resolve<IHandler<Message>>(), Is.InstanceOf<MessageHandler>());
             Assert.That(container.Resolve<IHandler<AnotherMessage>>(), Is.InstanceOf<AnotherMessageHandler>());
@@ -27,14 +27,13 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
-                                                 {
-                                                     scan.AssemblyContaining<FooRegistry>();
-                                                     scan.With<FirstInterfaceConvention>();
-                                                 }));
+            container.Configure(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<FirstInterfaceConvention>();
+            }));
 
-            Assert.That(container.Resolve<IMapper<Message, AnotherMessage>>(),
-                        Is.InstanceOf<MessageToAnotherMessageMapper>());
+            Assert.That(container.Resolve<IMapper<Message, AnotherMessage>>(), Is.InstanceOf<MessageToAnotherMessageMapper>());
         }
     }
 }

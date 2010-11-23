@@ -11,7 +11,7 @@ namespace UnityConfiguration
         public void Can_call_method_on_concrete_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x => x.AfterBuildingUp<StartableService1>().Call((c, s) => s.Start()));
+            container.Configure(x => x.AfterBuildingUp<StartableService1>().Call((c, s) => s.Start()));
 
             Assert.That(container.Resolve<StartableService1>().StartWasCalled);
         }
@@ -20,11 +20,11 @@ namespace UnityConfiguration
         public void Can_call_method_on_interface_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IStartable, StartableService1>();
-                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IStartable, StartableService1>();
+                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+            });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
         }
@@ -33,12 +33,12 @@ namespace UnityConfiguration
         public void Can_call_method_on_interface_after_build_up_2()
         {
             var container = new UnityContainer();
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IStartable, StartableService1>().WithName("1");
-                                         x.Register<IStartable, StartableService2>().WithName("2");
-                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IStartable, StartableService1>().WithName("1");
+                x.Register<IStartable, StartableService2>().WithName("2");
+                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+            });
 
             Assert.That(container.Resolve<IStartable>("1").StartWasCalled);
             Assert.That(container.Resolve<IStartable>("2").StartWasCalled);
@@ -48,13 +48,13 @@ namespace UnityConfiguration
         public void Can_call_method_on_several_interfaces_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IStartable, StartableService1>();
-                                         x.Register<IStoppable, StoppableService>();
-                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-                                         x.AfterBuildingUp<IStoppable>().Call((c, s) => s.Stop());
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IStartable, StartableService1>();
+                x.Register<IStoppable, StoppableService>();
+                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+                x.AfterBuildingUp<IStoppable>().Call((c, s) => s.Stop());
+            });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
             Assert.That(container.Resolve<IStoppable>().StopWasCalled);
@@ -64,11 +64,11 @@ namespace UnityConfiguration
         public void Can_decorate_concrete_service_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IFooService, FooService>();
-                                         x.AfterBuildingUp<FooService>().DecorateWith((c, t) => new FooDecorator(t));
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IFooService, FooService>();
+                x.AfterBuildingUp<FooService>().DecorateWith((c, t) => new FooDecorator(t));
+            });
 
             var fooService = container.Resolve<IFooService>();
             Assert.That(fooService, Is.InstanceOf<FooDecorator>());
@@ -79,11 +79,11 @@ namespace UnityConfiguration
         public void Can_decorate_interface_after_build_up()
         {
             var container = new UnityContainer();
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IFooService, FooService>();
-                                         x.AfterBuildingUp<IFooService>().DecorateWith((c, t) => new FooDecorator(t));
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IFooService, FooService>();
+                x.AfterBuildingUp<IFooService>().DecorateWith((c, t) => new FooDecorator(t));
+            });
 
             var fooService = container.Resolve<IFooService>();
             Assert.That(fooService, Is.InstanceOf<FooDecorator>());

@@ -25,11 +25,10 @@ namespace UnityConfiguration
             else
             {
                 container.Registrations.ForEach(c =>
-                                                    {
-                                                        if (c.RegisteredType == type)
-                                                            container.RegisterType(c.MappedToType, c.Name,
-                                                                                   lifetimeManager());
-                                                    });
+                {
+                    if (c.RegisteredType == type)
+                        container.RegisterType(c.MappedToType, c.Name, lifetimeManager());
+                });
             }
         }
     }

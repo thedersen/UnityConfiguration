@@ -11,8 +11,6 @@ namespace UnityConfiguration
         private readonly List<RegistrationConvention> conventions = new List<RegistrationConvention>();
         private readonly CompositeFilter<Type> filter = new CompositeFilter<Type>();
 
-        #region IAssemblyScanner Members
-
         public void AssemblyContaining<T>()
         {
             assemblies.Add(typeof (T).Assembly);
@@ -60,8 +58,6 @@ namespace UnityConfiguration
         {
             IncludeNamespace(typeof (T).Namespace);
         }
-
-        #endregion
 
         public void Scan(IUnityRegistry registry)
         {

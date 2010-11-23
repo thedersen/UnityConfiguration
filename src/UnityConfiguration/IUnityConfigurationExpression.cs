@@ -1,6 +1,6 @@
 namespace UnityConfiguration
 {
-    public interface IInitializationExpression : IUnityRegistry
+    public interface IUnityConfigurationExpression : IUnityRegistry
     {
         void AddRegistry<T>() where T : UnityRegistry, new();
     }

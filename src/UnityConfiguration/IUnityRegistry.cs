@@ -11,9 +11,9 @@ namespace UnityConfiguration
         FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate);
         LifetimeExpression MakeSingleton<T>();
         LifetimeExpression MakeSingleton<T>(string namedInstance);
-        ConfigurationExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
-        ConfigurationExpression<T> SelectConstructor<T>(params Type[] args);
-        ExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();
+        ConfigureTypeExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
+        ConfigureTypeExpression<T> SelectConstructor<T>(params Type[] args);
+        AddNewExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();
         PostBuildUpExpression<T> AfterBuildingUp<T>() where T : class;
     }
 }

@@ -19,14 +19,10 @@ namespace UnityConfiguration
             injectionMembers = new InjectionMember[0];
         }
 
-        #region ILifetimePolicyExpression Members
-
         public void AsSingleton()
         {
             lifetimeManager = new ContainerControlledLifetimeManager();
         }
-
-        #endregion
 
         public ILifetimePolicyExpression WithName(string name)
         {

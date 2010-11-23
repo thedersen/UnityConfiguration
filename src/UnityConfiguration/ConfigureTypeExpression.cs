@@ -2,11 +2,11 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class ConfigurationExpression<T> : Expression
+    public class ConfigureTypeExpression<T> : Expression
     {
         private readonly InjectionMember[] injectionMembers;
 
-        public ConfigurationExpression(params InjectionMember[] injectionMembers)
+        public ConfigureTypeExpression(params InjectionMember[] injectionMembers)
         {
             this.injectionMembers = injectionMembers;
         }

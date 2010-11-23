@@ -13,7 +13,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();
@@ -28,7 +28,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();
@@ -43,7 +43,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();
@@ -58,7 +58,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();
@@ -74,7 +74,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();
@@ -90,7 +90,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Scan(scan =>
+            container.Configure(x => x.Scan(scan =>
                                                  {
                                                      scan.AssemblyContaining<FooRegistry>();
                                                      scan.With<FirstInterfaceConvention>();

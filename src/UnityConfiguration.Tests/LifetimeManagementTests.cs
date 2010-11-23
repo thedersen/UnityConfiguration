@@ -12,11 +12,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IBarService, BarService>();
-                                         x.MakeSingleton<BarService>();
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IBarService, BarService>();
+                x.MakeSingleton<BarService>();
+            });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
@@ -26,11 +26,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
-                                     {
-                                         x.Register<IBarService, BarService>();
-                                         x.MakeSingleton<IBarService>();
-                                     });
+            container.Configure(x =>
+            {
+                x.Register<IBarService, BarService>();
+                x.MakeSingleton<IBarService>();
+            });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
@@ -40,10 +40,10 @@ namespace UnityConfiguration
         public void Can_make_transient_sevice_a_singleton_in_child_container()
         {
             var container = new UnityContainer();
-            container.Initialize(x => x.Register<IFooService, FooService>());
+            container.Configure(x => x.Register<IFooService, FooService>());
 
             IUnityContainer childContainer = container.CreateChildContainer();
-            childContainer.Initialize(x => x.MakeSingleton<FooService>());
+            childContainer.Configure(x => x.MakeSingleton<FooService>());
 
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
@@ -55,21 +55,18 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
-                                     {
-                                         x.Scan(scan =>
-                                                    {
-                                                        scan.AssemblyContaining<FooRegistry>();
-                                                        scan.With<AddAllConvention>().TypesImplementing
-                                                            <IHaveManyImplementations>();
-                                                    });
-                                         x.MakeSingleton<IHaveManyImplementations>();
-                                     });
+            container.Configure(x =>
+            {
+                x.Scan(scan =>
+                {
+                    scan.AssemblyContaining<FooRegistry>();
+                    scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
+                });
+                x.MakeSingleton<IHaveManyImplementations>();
+            });
 
-            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"),
-                        Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));
-            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation2"),
-                        Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation2")));
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation2"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation2")));
         }
     }
 }

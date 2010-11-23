@@ -12,7 +12,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.AddRegistry<FooRegistry>());
+            container.Configure(x => x.AddRegistry<FooRegistry>());
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
         }
@@ -22,11 +22,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
-                                     {
-                                         x.AddRegistry<FooRegistry>();
-                                         x.AddRegistry<BarRegistry>();
-                                     });
+            container.Configure(x =>
+            {
+                x.AddRegistry<FooRegistry>();
+                x.AddRegistry<BarRegistry>();
+            });
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());

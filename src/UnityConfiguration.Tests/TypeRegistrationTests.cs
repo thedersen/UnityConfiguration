@@ -14,7 +14,7 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             var myService = new BarService();
-            container.Initialize(x => x.Register<Func<int, IBarService>>(c => i => myService));
+            container.Configure(x => x.Register<Func<int, IBarService>>(c => i => myService));
 
             Assert.That(container.Resolve<Func<int, IBarService>>()(1), Is.SameAs(myService));
         }
@@ -23,7 +23,7 @@ namespace UnityConfiguration
         public void Can_register_named_instance()
         {
             var container = new UnityContainer();
-            container.Initialize(x => x.Register<IBarService, BarService>().WithName("name"));
+            container.Configure(x => x.Register<IBarService, BarService>().WithName("name"));
 
             Assert.That(container.Resolve<IBarService>("name"), Is.InstanceOf<BarService>());
         }
@@ -34,7 +34,7 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             var myService = new BarService();
-            container.Initialize(x => x.Register<IBarService>(c => myService).WithName("name"));
+            container.Configure(x => x.Register<IBarService>(c => myService).WithName("name"));
 
             Assert.That(container.Resolve<IBarService>("name"), Is.SameAs(myService));
         }
@@ -43,7 +43,7 @@ namespace UnityConfiguration
         public void Can_register_named_singleton_instance()
         {
             var container = new UnityContainer();
-            container.Initialize(x => x.Register<IBarService, BarService>().WithName("name").AsSingleton());
+            container.Configure(x => x.Register<IBarService, BarService>().WithName("name").AsSingleton());
 
             Assert.That(container.Resolve<IBarService>("name"), Is.SameAs(container.Resolve<IBarService>("name")));
         }
@@ -53,7 +53,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Register<IBarService, BarService>().AsSingleton());
+            container.Configure(x => x.Register<IBarService, BarService>().AsSingleton());
 
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
@@ -64,7 +64,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => x.Register<IBarService, BarService>());
+            container.Configure(x => x.Register<IBarService, BarService>());
 
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
             Assert.That(container.Resolve<IBarService>(), Is.Not.SameAs(container.Resolve<IBarService>()));
@@ -76,7 +76,7 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             var myService = new BarService();
-            container.Initialize(x => x.Register<IBarService>(c => myService));
+            container.Configure(x => x.Register<IBarService>(c => myService));
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(myService));
         }

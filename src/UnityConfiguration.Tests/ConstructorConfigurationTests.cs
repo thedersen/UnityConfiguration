@@ -12,7 +12,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
+            container.Configure(x =>
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
                                          x.Register<IFooService, FooService>();
@@ -29,7 +29,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
+            container.Configure(x =>
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
                                          x.SelectConstructor<ServiceWithCtorArgs>();
@@ -45,7 +45,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x =>
+            container.Configure(x =>
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
                                          x.Register<IFooService, FooService>();

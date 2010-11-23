@@ -3,22 +3,19 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    internal class InitializationExpression : UnityRegistry, IInitializationExpression
+    internal class UnityConfigurationExpression : UnityRegistry, IUnityConfigurationExpression
     {
         private readonly List<UnityRegistry> registries = new List<UnityRegistry>();
-
-        #region IInitializationExpression Members
 
         public void AddRegistry<T>() where T : UnityRegistry, new()
         {
             registries.Add(new T());
         }
 
-        #endregion
-
-        internal void Initialize(IUnityContainer container)
+        public override void Configure(IUnityContainer container)
         {
-            registries.Add(this);
+            base.Configure(container);
+
             registries.ForEach(registry => registry.Configure(container));
         }
     }

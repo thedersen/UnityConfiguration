@@ -11,7 +11,7 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
 
-            container.Initialize(x => { });
+            container.Configure(x => { });
 
             Assert.That(container.Resolve<IUnityContainer>(), Is.SameAs(container));
         }
