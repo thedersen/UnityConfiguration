@@ -57,7 +57,7 @@
     <Compile Include="IUnityConfigurationExpression.cs" />
     <Compile Include="ILifetimePolicyExpression.cs" />
     <Compile Include="UnityConfigurationExpression.cs" />
-    <Compile Include="IRegistrationConvention.cs" />
+    <Compile Include="IAssemblyScannerConvention.cs" />
     <Compile Include="IUnityRegistry.cs" />
     <Compile Include="FirstInterfaceConvention.cs" />
     <Compile Include="LifetimeExpression.cs" />

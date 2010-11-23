@@ -23,9 +23,9 @@ namespace UnityConfiguration
         }
     }
 
-    public class CustomConvention : IRegistrationConvention
+    public class CustomConvention : IAssemblyScannerConvention
     {
-        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
+        void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
             if (type == typeof(FooService))
                 registry.Register<IFooService, FooService>().WithName("Custom");

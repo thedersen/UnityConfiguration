@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class SetAllPropertiesConvention : IRegistrationConvention
+    public class SetAllPropertiesConvention : IAssemblyScannerConvention
     {
         private Type interfaceType;
 
@@ -15,7 +15,7 @@ namespace UnityConfiguration
             interfaceType = typeof (T);
         }
 
-        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
+        void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
             IEnumerable<PropertyInfo> properties =
                 type.GetProperties().Where(p => p.CanWrite && p.PropertyType == interfaceType);

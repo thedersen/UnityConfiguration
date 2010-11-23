@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UnityConfiguration
 {
-    public class FirstInterfaceConvention : IRegistrationConvention
+    public class FirstInterfaceConvention : IAssemblyScannerConvention
     {
         private bool ignoreBaseTypes;
 
@@ -12,7 +12,7 @@ namespace UnityConfiguration
             ignoreBaseTypes = true;
         }
 
-        void IRegistrationConvention.Process(Type type, IUnityRegistry registry)
+        void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
             if (!type.IsConcrete() || !type.CanBeCreated())
                 return;

@@ -2,7 +2,7 @@
 
 namespace UnityConfiguration
 {
-    public interface IRegistrationConvention
+    public interface IAssemblyScannerConvention
     {
         void Process(Type type, IUnityRegistry registry);
     }

@@ -5,7 +5,7 @@ namespace UnityConfiguration
     public interface IAssemblyScanner
     {
         void AssemblyContaining<T>();
-        TConvention With<TConvention>() where TConvention : IRegistrationConvention, new();
+        TConvention With<TConvention>() where TConvention : IAssemblyScannerConvention, new();
         void ExcludeType<T>();
         void Exclude(Func<Type, bool> exclude);
         void ExcludeNamespaceContaining<T>();
