@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration

@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
     public class LifetimeExpression : Expression
     {
-        private readonly Type type;
         private readonly Func<LifetimeManager> lifetimeManager;
         private readonly string namedInstance;
-        
+        private readonly Type type;
+
         public LifetimeExpression(Type type, Func<LifetimeManager> lifetimeManager, string namedInstance)
         {
             this.type = type;
@@ -25,10 +25,11 @@ namespace UnityConfiguration
             else
             {
                 container.Registrations.ForEach(c =>
-                {
-                    if (c.RegisteredType == type)
-                        container.RegisterType(c.MappedToType, c.Name, lifetimeManager());
-                });
+                                                    {
+                                                        if (c.RegisteredType == type)
+                                                            container.RegisterType(c.MappedToType, c.Name,
+                                                                                   lifetimeManager());
+                                                    });
             }
         }
     }

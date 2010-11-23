@@ -7,9 +7,9 @@ namespace UnityConfiguration
     {
         private readonly Type typeFrom;
         private readonly Type typeTo;
-        private string name;
-        private LifetimeManager lifetimeManager;
         private InjectionMember[] injectionMembers;
+        private LifetimeManager lifetimeManager;
+        private string name;
 
         public RegistrationExpression(Type typeFrom, Type typeTo)
         {
@@ -19,15 +19,19 @@ namespace UnityConfiguration
             injectionMembers = new InjectionMember[0];
         }
 
-        public ILifetimePolicyExpression WithName(string name)
-        {
-            this.name = name;
-            return this;
-        }
+        #region ILifetimePolicyExpression Members
 
         public void AsSingleton()
         {
             lifetimeManager = new ContainerControlledLifetimeManager();
+        }
+
+        #endregion
+
+        public ILifetimePolicyExpression WithName(string name)
+        {
+            this.name = name;
+            return this;
         }
 
         internal void WithInjectionMembers(params InjectionMember[] injectionMember)

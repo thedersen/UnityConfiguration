@@ -9,15 +9,16 @@ namespace UnityConfiguration
     public class SetAllPropertiesConvention : RegistrationConvention
     {
         private Type interfaceType;
-        
+
         public void OfType<T>()
         {
             interfaceType = typeof (T);
         }
-        
+
         internal override void Process(Type type, IUnityRegistry registry)
         {
-            IEnumerable<PropertyInfo> properties = type.GetProperties().Where(p => p.CanWrite && p.PropertyType == interfaceType);
+            IEnumerable<PropertyInfo> properties =
+                type.GetProperties().Where(p => p.CanWrite && p.PropertyType == interfaceType);
 
             foreach (PropertyInfo property in properties)
             {

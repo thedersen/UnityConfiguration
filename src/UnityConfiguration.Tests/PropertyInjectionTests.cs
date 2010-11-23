@@ -12,11 +12,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>();
-                scan.With<SetAllPropertiesConvention>().OfType<ILogger>();
-            }));
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<FirstInterfaceConvention>();
+                                                     scan.With<SetAllPropertiesConvention>().OfType<ILogger>();
+                                                 }));
 
             Assert.That(container.Resolve<FooService>().Logger, Is.Not.Null);
         }
@@ -26,10 +26,10 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<ILogger, NullLogger>();
-                x.AfterBuildingUp<FooService>().Call((c, s) => s.Logger = c.Resolve<ILogger>());
-            });
+                                     {
+                                         x.Register<ILogger, NullLogger>();
+                                         x.AfterBuildingUp<FooService>().Call((c, s) => s.Logger = c.Resolve<ILogger>());
+                                     });
 
             Assert.That(container.Resolve<FooService>().Logger, Is.Not.Null);
         }

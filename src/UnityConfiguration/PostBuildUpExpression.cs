@@ -23,7 +23,7 @@ namespace UnityConfiguration
             if (decoratorFunc != null)
                 container.AddExtension(new DecoratorExtension<T>(decoratorFunc));
 
-            if(action != null)
+            if (action != null)
                 container.AddExtension(new PostBuildUpActionExtension<T>(action));
         }
     }

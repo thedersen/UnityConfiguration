@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace UnityConfiguration
 {
@@ -16,7 +16,7 @@ namespace UnityConfiguration
 
         public static bool CanBeCastTo(this Type typeFrom, Type typeTo)
         {
-            if (typeFrom == null) 
+            if (typeFrom == null)
                 return false;
 
             if (typeFrom.IsInterface || typeFrom.IsAbstract)
@@ -24,7 +24,7 @@ namespace UnityConfiguration
 
             if (IsOpenGeneric(typeFrom))
                 return false;
-            
+
             return typeTo.IsAssignableFrom(typeFrom);
         }
 
@@ -35,7 +35,7 @@ namespace UnityConfiguration
 
         public static bool IsInNamespace(this Type type, string @namespace)
         {
-            if (type.Namespace != null) 
+            if (type.Namespace != null)
                 return type.Namespace.StartsWith(@namespace);
 
             return false;

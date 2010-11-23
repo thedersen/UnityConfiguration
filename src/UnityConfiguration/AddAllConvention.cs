@@ -1,19 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace UnityConfiguration
 {
     public class AddAllConvention : RegistrationConvention, ILifetimePolicyExpression
     {
-        private Type interfaceType;
         private bool asSingleton;
         private Func<Type, string> getName = t => t.Name;
+        private Type interfaceType;
+
+        #region ILifetimePolicyExpression Members
+
+        public void AsSingleton()
+        {
+            asSingleton = true;
+        }
+
+        #endregion
 
         public AddAllConvention TypesImplementing<T>()
         {
-            interfaceType = typeof(T);
+            interfaceType = typeof (T);
             return this;
         }
 
@@ -21,11 +27,6 @@ namespace UnityConfiguration
         {
             getName = func;
             return this;
-        }
-
-        public void AsSingleton()
-        {
-            asSingleton = true;
         }
 
         internal override void Process(Type type, IUnityRegistry registry)

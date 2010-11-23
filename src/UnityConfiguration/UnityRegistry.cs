@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Practices.Unity;
 
@@ -6,16 +6,11 @@ namespace UnityConfiguration
 {
     public class UnityRegistry : IUnityRegistry
     {
+        private readonly List<Expression> configurations = new List<Expression>();
         private readonly List<Expression> extensions = new List<Expression>();
         private readonly List<Expression> registrations = new List<Expression>();
-        private readonly List<Expression> configurations = new List<Expression>();
 
-        public void Configure(IUnityContainer container)
-        {
-            extensions.ForEach(expression => expression.Execute(container));
-            registrations.ForEach(expression => expression.Execute(container));
-            configurations.ForEach(expression => expression.Execute(container));
-        }
+        #region IUnityRegistry Members
 
         public void Scan(Action<IAssemblyScanner> action)
         {
@@ -28,7 +23,7 @@ namespace UnityConfiguration
 
         public RegistrationExpression Register(Type typeFrom, Type typeTo)
         {
-            var registrationExpression = new RegistrationExpression(typeFrom,typeTo);
+            var registrationExpression = new RegistrationExpression(typeFrom, typeTo);
             registrations.Add(registrationExpression);
             return registrationExpression;
         }
@@ -53,7 +48,8 @@ namespace UnityConfiguration
 
         public LifetimeExpression MakeSingleton<T>(string namedInstance)
         {
-            var lifetimeExpression = new LifetimeExpression(typeof(T), () => new ContainerControlledLifetimeManager(), namedInstance);
+            var lifetimeExpression = new LifetimeExpression(typeof (T), () => new ContainerControlledLifetimeManager(),
+                                                            namedInstance);
             configurations.Add(lifetimeExpression);
 
             return lifetimeExpression;
@@ -84,6 +80,15 @@ namespace UnityConfiguration
             var afterBuildUpExpression = new PostBuildUpExpression<T>();
             extensions.Add(afterBuildUpExpression);
             return afterBuildUpExpression;
+        }
+
+        #endregion
+
+        public void Configure(IUnityContainer container)
+        {
+            extensions.ForEach(expression => expression.Execute(container));
+            registrations.ForEach(expression => expression.Execute(container));
+            configurations.ForEach(expression => expression.Execute(container));
         }
     }
 }

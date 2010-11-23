@@ -21,10 +21,10 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<IStartable, StartableService1>();
-                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-            });
+                                     {
+                                         x.Register<IStartable, StartableService1>();
+                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+                                     });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
         }
@@ -34,11 +34,11 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<IStartable, StartableService1>().WithName("1");
-                x.Register<IStartable, StartableService2>().WithName("2");
-                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-            });
+                                     {
+                                         x.Register<IStartable, StartableService1>().WithName("1");
+                                         x.Register<IStartable, StartableService2>().WithName("2");
+                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+                                     });
 
             Assert.That(container.Resolve<IStartable>("1").StartWasCalled);
             Assert.That(container.Resolve<IStartable>("2").StartWasCalled);
@@ -49,12 +49,12 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<IStartable, StartableService1>();
-                x.Register<IStoppable, StoppableService>();
-                x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
-                x.AfterBuildingUp<IStoppable>().Call((c, s) => s.Stop());
-            });
+                                     {
+                                         x.Register<IStartable, StartableService1>();
+                                         x.Register<IStoppable, StoppableService>();
+                                         x.AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
+                                         x.AfterBuildingUp<IStoppable>().Call((c, s) => s.Stop());
+                                     });
 
             Assert.That(container.Resolve<IStartable>().StartWasCalled);
             Assert.That(container.Resolve<IStoppable>().StopWasCalled);
@@ -65,10 +65,10 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<IFooService, FooService>();
-                x.AfterBuildingUp<FooService>().DecorateWith((c, t) => new FooDecorator(t));
-            });
+                                     {
+                                         x.Register<IFooService, FooService>();
+                                         x.AfterBuildingUp<FooService>().DecorateWith((c, t) => new FooDecorator(t));
+                                     });
 
             var fooService = container.Resolve<IFooService>();
             Assert.That(fooService, Is.InstanceOf<FooDecorator>());
@@ -80,10 +80,10 @@ namespace UnityConfiguration
         {
             var container = new UnityContainer();
             container.Initialize(x =>
-            {
-                x.Register<IFooService, FooService>();
-                x.AfterBuildingUp<IFooService>().DecorateWith((c, t) => new FooDecorator(t));
-            });
+                                     {
+                                         x.Register<IFooService, FooService>();
+                                         x.AfterBuildingUp<IFooService>().DecorateWith((c, t) => new FooDecorator(t));
+                                     });
 
             var fooService = container.Resolve<IFooService>();
             Assert.That(fooService, Is.InstanceOf<FooDecorator>());

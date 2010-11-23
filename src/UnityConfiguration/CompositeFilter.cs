@@ -14,7 +14,7 @@ namespace UnityConfiguration
         public CompositePredicate<T> Excludes
         {
             get { return excludes; }
-            set {  }
+            set { }
         }
 
         public bool Matches(T target)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity;
@@ -10,7 +11,7 @@ namespace UnityConfiguration.Diagnostics
         {
             var stringBuilder = new StringBuilder();
 
-            var registrations = container.Registrations.Select(ToRegistrationString).ToList();
+            List<string> registrations = container.Registrations.Select(ToRegistrationString).ToList();
             registrations.Sort();
             registrations.ForEach(s => stringBuilder.AppendLine(s));
 
@@ -19,7 +20,8 @@ namespace UnityConfiguration.Diagnostics
 
         private static string ToRegistrationString(ContainerRegistration registration)
         {
-            return registration.RegisteredType.FullName + " - " + registration.MappedToType.FullName + Named(registration) + AsSingleton(registration);
+            return registration.RegisteredType.FullName + " - " + registration.MappedToType.FullName +
+                   Named(registration) + AsSingleton(registration);
         }
 
         private static string Named(ContainerRegistration registration)

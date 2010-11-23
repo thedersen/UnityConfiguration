@@ -23,10 +23,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.AddRegistry<FooRegistry>();
-                x.AddRegistry<BarRegistry>();
-            });
+                                     {
+                                         x.AddRegistry<FooRegistry>();
+                                         x.AddRegistry<BarRegistry>();
+                                     });
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());

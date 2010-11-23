@@ -14,11 +14,12 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
-            }));
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<FirstInterfaceConvention>();
+                                                     scan.With<AddAllConvention>().TypesImplementing
+                                                         <IHaveManyImplementations>();
+                                                 }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());

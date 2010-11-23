@@ -13,11 +13,11 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
-                x.Register<IFooService, FooService>();
-                x.ConfigureCtorArgsFor<ServiceWithCtorArgs>("some string", typeof(IFooService));
-            });
+                                     {
+                                         x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
+                                         x.Register<IFooService, FooService>();
+                                         x.ConfigureCtorArgsFor<ServiceWithCtorArgs>("some string", typeof (IFooService));
+                                     });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();
             Assert.That(serviceWithCtorArgs.SomeString, Is.EqualTo("some string"));
@@ -30,10 +30,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
-                x.SelectConstructor<ServiceWithCtorArgs>();
-            });
+                                     {
+                                         x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
+                                         x.SelectConstructor<ServiceWithCtorArgs>();
+                                     });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();
             Assert.That(serviceWithCtorArgs.SomeString, Is.Null);
@@ -46,11 +46,11 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
-                x.Register<IFooService, FooService>();
-                x.SelectConstructor<ServiceWithCtorArgs>(typeof(IFooService));
-            });
+                                     {
+                                         x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
+                                         x.Register<IFooService, FooService>();
+                                         x.SelectConstructor<ServiceWithCtorArgs>(typeof (IFooService));
+                                     });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();
             Assert.That(serviceWithCtorArgs.SomeString, Is.Null);

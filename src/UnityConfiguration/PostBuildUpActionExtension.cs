@@ -16,7 +16,8 @@ namespace UnityConfiguration
 
         protected override void Initialize()
         {
-            Context.Strategies.Add(new PostBuildUpActionStrategy<T>(action, Container), UnityBuildStage.PostInitialization);
+            Context.Strategies.Add(new PostBuildUpActionStrategy<T>(action, Container),
+                                   UnityBuildStage.PostInitialization);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace UnityConfiguration
@@ -14,7 +14,7 @@ namespace UnityConfiguration
 
         internal override void Process(Type type, IUnityRegistry registry)
         {
-            if (!type.IsConcrete() || !type.CanBeCreated()) 
+            if (!type.IsConcrete() || !type.CanBeCreated())
                 return;
 
             Type interfaceType = GetInterfaceType(type);
@@ -31,10 +31,10 @@ namespace UnityConfiguration
             if (!ignoreBaseTypes || type.BaseType == null)
                 return interfaceType;
 
-            foreach (var @interface in interfaces)
+            foreach (Type @interface in interfaces)
             {
                 if (!type.BaseType.ImplementsInterface(@interface))
-                   return @interface;
+                    return @interface;
             }
 
             return interfaceType;

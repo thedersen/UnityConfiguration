@@ -13,10 +13,10 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.Register<IBarService, BarService>();
-                x.MakeSingleton<BarService>();
-            });
+                                     {
+                                         x.Register<IBarService, BarService>();
+                                         x.MakeSingleton<BarService>();
+                                     });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
@@ -27,33 +27,14 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x =>
-            {
-                x.Register<IBarService, BarService>();
-                x.MakeSingleton<IBarService>();
-            });
+                                     {
+                                         x.Register<IBarService, BarService>();
+                                         x.MakeSingleton<IBarService>();
+                                     });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
         }
 
-
-        [Test]
-        public void Configure_interface_as_singletons_makes_all_registrations_a_singleton()
-        {
-            var container = new UnityContainer();
-
-            container.Initialize(x =>
-            {
-                x.Scan(scan =>
-                {
-                    scan.AssemblyContaining<FooRegistry>();
-                    scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
-                });
-                x.MakeSingleton<IHaveManyImplementations>();
-            });
-
-            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));
-            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation2"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation2")));
-        }
 
         [Test]
         public void Can_make_transient_sevice_a_singleton_in_child_container()
@@ -67,6 +48,28 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
             Assert.That(childContainer.Resolve<IFooService>(), Is.SameAs(childContainer.Resolve<IFooService>()));
+        }
+
+        [Test]
+        public void Configure_interface_as_singletons_makes_all_registrations_a_singleton()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x =>
+                                     {
+                                         x.Scan(scan =>
+                                                    {
+                                                        scan.AssemblyContaining<FooRegistry>();
+                                                        scan.With<AddAllConvention>().TypesImplementing
+                                                            <IHaveManyImplementations>();
+                                                    });
+                                         x.MakeSingleton<IHaveManyImplementations>();
+                                     });
+
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"),
+                        Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));
+            Assert.That(container.Resolve<IHaveManyImplementations>("Implementation2"),
+                        Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation2")));
         }
     }
 }

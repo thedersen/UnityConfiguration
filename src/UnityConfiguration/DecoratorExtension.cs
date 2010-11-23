@@ -22,8 +22,8 @@ namespace UnityConfiguration
 
     public class DecoratorStrategy<T> : BuilderStrategy where T : class
     {
-        private readonly Func<IUnityContainer, T, object> func;
         private readonly IUnityContainer container;
+        private readonly Func<IUnityContainer, T, object> func;
 
         public DecoratorStrategy(Func<IUnityContainer, T, object> func, IUnityContainer container)
         {

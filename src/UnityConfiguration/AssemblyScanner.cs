@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,9 +11,11 @@ namespace UnityConfiguration
         private readonly List<RegistrationConvention> conventions = new List<RegistrationConvention>();
         private readonly CompositeFilter<Type> filter = new CompositeFilter<Type>();
 
+        #region IAssemblyScanner Members
+
         public void AssemblyContaining<T>()
         {
-            assemblies.Add(typeof(T).Assembly);
+            assemblies.Add(typeof (T).Assembly);
         }
 
         public TConvention With<TConvention>() where TConvention : RegistrationConvention, new()
@@ -36,12 +38,12 @@ namespace UnityConfiguration
 
         public void ExcludeNamespaceContaining<T>()
         {
-            ExcludeNamespace(typeof(T).Namespace);
+            ExcludeNamespace(typeof (T).Namespace);
         }
 
         public void ExcludeType<T>()
         {
-            Exclude(type => type == typeof(T));
+            Exclude(type => type == typeof (T));
         }
 
         public void Include(Func<Type, bool> include)
@@ -56,8 +58,10 @@ namespace UnityConfiguration
 
         public void IncludeNamespaceContaining<T>()
         {
-            IncludeNamespace(typeof(T).Namespace);
+            IncludeNamespace(typeof (T).Namespace);
         }
+
+        #endregion
 
         public void Scan(IUnityRegistry registry)
         {

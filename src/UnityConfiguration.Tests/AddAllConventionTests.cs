@@ -14,27 +14,15 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
-            }));
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<AddAllConvention>().TypesImplementing
+                                                         <IHaveManyImplementations>();
+                                                 }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().Count(), Is.EqualTo(2));
-            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.Not.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
-        }
-
-        [Test]
-        public void Can_override_the_default_naming_convention()
-        {
-            var container = new UnityContainer();
-
-            container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test");
-            }));
-
-            Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.Not.Null);
+            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(),
+                        Is.Not.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
         }
 
         [Test]
@@ -43,12 +31,14 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().AsSingleton();
-            }));
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<AddAllConvention>().TypesImplementing
+                                                         <IHaveManyImplementations>().AsSingleton();
+                                                 }));
 
-            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
+            Assert.That(container.ResolveAll<IHaveManyImplementations>().First(),
+                        Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
         }
 
         [Test]
@@ -57,12 +47,29 @@ namespace UnityConfiguration
             var container = new UnityContainer();
 
             container.Initialize(x => x.Scan(scan =>
-            {
-                scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test").AsSingleton();
-            }));
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<AddAllConvention>().TypesImplementing
+                                                         <IHaveManyImplementations>().WithName(t => "test").AsSingleton();
+                                                 }));
 
-            Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.SameAs(container.Resolve<IHaveManyImplementations>("test")));
+            Assert.That(container.Resolve<IHaveManyImplementations>("test"),
+                        Is.SameAs(container.Resolve<IHaveManyImplementations>("test")));
+        }
+
+        [Test]
+        public void Can_override_the_default_naming_convention()
+        {
+            var container = new UnityContainer();
+
+            container.Initialize(x => x.Scan(scan =>
+                                                 {
+                                                     scan.AssemblyContaining<FooRegistry>();
+                                                     scan.With<AddAllConvention>().TypesImplementing
+                                                         <IHaveManyImplementations>().WithName(t => "test");
+                                                 }));
+
+            Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.Not.Null);
         }
     }
 }
