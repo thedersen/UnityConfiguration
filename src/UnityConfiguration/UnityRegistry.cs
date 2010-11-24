@@ -73,6 +73,14 @@ namespace UnityConfiguration
             return extensionExpression;
         }
 
+        public ConfigureExtensionExpression<T> ConfigureExtension<T>(Action<T> configAction) where T : IUnityContainerExtensionConfigurator
+        {
+            var configureExtensionExpression = new ConfigureExtensionExpression<T>(configAction);
+            configurations.Add(configureExtensionExpression);
+
+            return configureExtensionExpression;
+        }
+
         public PostBuildUpExpression<T> AfterBuildingUp<T>() where T : class
         {
             var afterBuildUpExpression = new PostBuildUpExpression<T>();

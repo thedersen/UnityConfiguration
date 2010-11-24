@@ -95,6 +95,7 @@
     <Compile Include="Services\StartableService2.cs" />
     <Compile Include="Services\StoppableService.cs" />
     <Compile Include="TypeRegistrationTests.cs" />
+    <Compile Include="UnityExtensionsConfigurationTests.cs" />
     <Compile Include="UserInterface\IMyView.cs" />
     <Compile Include="UserInterface\MyView.cs">
       <SubType>UserControl</SubType>
