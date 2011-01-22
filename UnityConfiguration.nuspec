@@ -1,0 +1,17 @@
+<package>
+  <metadata>
+    <id>UnityConfiguration</id>
+    <version>1.2.0.0</version>
+    <authors>Thomas Pedersen (thedersen)</authors>
+    <description>
+		Convention based configuration API for the Microsoft Unity IoC container.
+    </description>
+	<projectUrl>http://github.com/thedersen/UnityConfiguration</projectUrl>
+	<dependencies>
+      <dependency id="Unity" version="[2.0]" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="bin\UnityConfiguration.dll" target="lib" />
+  </files>
+</package>
