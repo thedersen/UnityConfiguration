@@ -15,6 +15,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\UnityConfiguration.dll" target="lib" />
+    <file src="build\binaries\UnityConfiguration.dll" target="lib" />
   </files>
 </package>
