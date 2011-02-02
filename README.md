@@ -1,6 +1,9 @@
+UnityConfiguration
+==================
 Convention based configuration API for the Unity IoC container. Heavily influenced by StructureMap.
 
-###Scanning
+Scanning
+--------
 
 	var container = new UnityContainer();
 
@@ -11,7 +14,8 @@ Convention based configuration API for the Unity IoC container. Heavily influenc
 		scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
 	}));
 
-###Working with registries
+Working with registries
+-----------------------
 
 	var container = new UnityContainer();
 
