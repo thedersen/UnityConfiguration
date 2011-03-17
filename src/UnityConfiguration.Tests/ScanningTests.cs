@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.Practices.Unity;
 using NUnit.Framework;
@@ -23,6 +24,76 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
             Assert.That(container.ResolveAll<IHaveManyImplementations>().Count(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Can_scan_assembly()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.Assembly(typeof(FooRegistry).Assembly);
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_scan_named_assembly()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.Assembly("UnityConfiguration.Tests");
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_scan_named_assembly_with_extension()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.Assembly("UnityConfiguration.Tests.dll");
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_scan_folder()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.AssembliesInDirectory(Environment.CurrentDirectory);
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_scan_base_folder()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.AssembliesInBaseDirectory();
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
         }
     }
 }

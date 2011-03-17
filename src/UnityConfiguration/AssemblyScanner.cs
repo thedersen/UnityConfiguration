@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace UnityConfiguration
 {
@@ -11,9 +13,54 @@ namespace UnityConfiguration
         private readonly List<IAssemblyScannerConvention> conventions = new List<IAssemblyScannerConvention>();
         private readonly CompositeFilter<Type> filter = new CompositeFilter<Type>();
 
+        public void Assembly(Assembly assembly)
+        {
+            if (!assemblies.Contains(assembly))
+                assemblies.Add(assembly);
+        }
+
+        public void Assembly(string assemblyName)
+        {
+            assemblyName = Regex.Replace(assemblyName, ".dll$", string.Empty);
+            Assembly(AppDomain.CurrentDomain.Load(assemblyName));
+        }
+
         public void AssemblyContaining<T>()
         {
-            assemblies.Add(typeof (T).Assembly);
+            Assembly(typeof(T).Assembly);
+        }
+
+        public void AssembliesInBaseDirectory()
+        {
+            AssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory);
+        }
+
+        public void AssembliesInDirectory(string path)
+        {
+            if(!Directory.Exists(path))
+                return;
+
+            var assemblyPaths = from file in Directory.GetFiles(path)
+                                let extension = Path.GetExtension(file)
+                                where extension.Equals(".exe", StringComparison.OrdinalIgnoreCase) ||
+                                      extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)
+                                select file;
+
+            foreach (string assemblyPath in assemblyPaths)
+            {
+                Assembly assembly = null;
+                try
+                {
+                    assembly = System.Reflection.Assembly.LoadFrom(assemblyPath);
+                }
+                catch
+                {
+                    // ignore
+                }
+
+                if (assembly != null)
+                    Assembly(assembly);
+            }
         }
 
         public TConvention With<TConvention>() where TConvention : IAssemblyScannerConvention, new()
@@ -36,12 +83,12 @@ namespace UnityConfiguration
 
         public void ExcludeNamespaceContaining<T>()
         {
-            ExcludeNamespace(typeof (T).Namespace);
+            ExcludeNamespace(typeof(T).Namespace);
         }
 
         public void ExcludeType<T>()
         {
-            Exclude(type => type == typeof (T));
+            Exclude(type => type == typeof(T));
         }
 
         public void Include(Func<Type, bool> include)
@@ -56,7 +103,7 @@ namespace UnityConfiguration
 
         public void IncludeNamespaceContaining<T>()
         {
-            IncludeNamespace(typeof (T).Namespace);
+            IncludeNamespace(typeof(T).Namespace);
         }
 
         public void Scan(IUnityRegistry registry)
