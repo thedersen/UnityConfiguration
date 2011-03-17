@@ -25,7 +25,7 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.AddRegistry<FooRegistry>();
-                x.AddRegistry<BarRegistry>();
+                x.AddRegistry(new BarRegistry());
             });
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());

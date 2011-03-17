@@ -9,7 +9,13 @@ namespace UnityConfiguration
 
         public void AddRegistry<T>() where T : UnityRegistry, new()
         {
-            registries.Add(new T());
+            AddRegistry(new T());
+        }
+
+        public void AddRegistry(UnityRegistry registry)
+        {
+            if(!registries.Contains(registry))
+                registries.Add(registry);
         }
 
         public override void Configure(IUnityContainer container)
