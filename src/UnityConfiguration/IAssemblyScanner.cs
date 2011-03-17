@@ -12,6 +12,7 @@ namespace UnityConfiguration
         void AssembliesInDirectory(string path);
 
         TConvention With<TConvention>() where TConvention : IAssemblyScannerConvention, new();
+        void ForRegistries();
 
         void ExcludeType<T>();
         void Exclude(Func<Type, bool> exclude);
@@ -20,5 +21,6 @@ namespace UnityConfiguration
         void Include(Func<Type, bool> include);
         void IncludeNamespaceContaining<T>();
         void IncludeNamespace(string @namespace);
+        
     }
 }

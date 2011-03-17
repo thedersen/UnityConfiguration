@@ -9,6 +9,7 @@ namespace UnityConfiguration
         private readonly List<Expression> configurations = new List<Expression>();
         private readonly List<Expression> extensions = new List<Expression>();
         private readonly List<Expression> registrations = new List<Expression>();
+        private readonly List<UnityRegistry> registries = new List<UnityRegistry>();
 
         public void Scan(Action<IAssemblyScanner> action)
         {
@@ -17,6 +18,16 @@ namespace UnityConfiguration
             action(assemblyScanner);
 
             assemblyScanner.Scan(this);
+        }
+
+        public void AddRegistry<T>() where T : UnityRegistry, new()
+        {
+            AddRegistry(new T());
+        }
+
+        public void AddRegistry(UnityRegistry registry)
+        {
+            registries.Add(registry);
         }
 
         public RegistrationExpression Register(Type typeFrom, Type typeTo)
@@ -90,6 +101,7 @@ namespace UnityConfiguration
 
         public virtual void Configure(IUnityContainer container)
         {
+            registries.ForEach(x => x.Configure(container));
             extensions.ForEach(expression => expression.Execute(container));
             registrations.ForEach(expression => expression.Execute(container));
             configurations.ForEach(expression => expression.Execute(container));

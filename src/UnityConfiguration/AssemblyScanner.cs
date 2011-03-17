@@ -71,6 +71,11 @@ namespace UnityConfiguration
             return convention;
         }
 
+        public void ForRegistries()
+        {
+            With<ScanForRegistriesConvention>();
+        }
+
         public void Exclude(Func<Type, bool> exclude)
         {
             filter.Excludes += exclude;

@@ -6,6 +6,8 @@ namespace UnityConfiguration
     public interface IUnityRegistry
     {
         void Scan(Action<IAssemblyScanner> action);
+        void AddRegistry<T>() where T : UnityRegistry, new();
+        void AddRegistry(UnityRegistry registry);
         RegistrationExpression Register(Type typeFrom, Type typeTo);
         RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom;
         FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate);

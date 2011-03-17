@@ -95,5 +95,19 @@ namespace UnityConfiguration
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
         }
+
+        [Test]
+        public void Can_scan_for_registries()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.AssembliesInBaseDirectory();
+                                                scan.ForRegistries();
+                                            }));
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
     }
 }
