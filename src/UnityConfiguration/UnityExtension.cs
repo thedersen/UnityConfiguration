@@ -5,13 +5,13 @@ namespace UnityConfiguration
 {
     public static class UnityExtension
     {
-        public static void Configure(this IUnityContainer container, Action<IUnityConfigurationExpression> expression)
+        public static void Configure(this IUnityContainer container, Action<IUnityRegistry> expression)
         {
-            var configurationExpression = new UnityConfigurationExpression();
+            var registry = new UnityRegistry();
 
-            expression(configurationExpression);
+            expression(registry);
 
-            configurationExpression.Configure(container);
+            registry.Configure(container);
         }
     }
 }

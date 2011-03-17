@@ -66,10 +66,8 @@
     <Compile Include="AddNewExtensionExpression.cs" />
     <Compile Include="FactoryRegistrationExpression.cs" />
     <Compile Include="IAssemblyScanner.cs" />
-    <Compile Include="IUnityConfigurationExpression.cs" />
     <Compile Include="ILifetimePolicyExpression.cs" />
     <Compile Include="ScanForRegistriesConvention.cs" />
-    <Compile Include="UnityConfigurationExpression.cs" />
     <Compile Include="IAssemblyScannerConvention.cs" />
     <Compile Include="IUnityRegistry.cs" />
     <Compile Include="FirstInterfaceConvention.cs" />
