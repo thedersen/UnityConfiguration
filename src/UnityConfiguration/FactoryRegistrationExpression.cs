@@ -13,6 +13,10 @@ namespace UnityConfiguration
             this.factoryDelegate = factoryDelegate;
         }
 
+        /// <summary>
+        /// Specify a name for this registration.
+        /// </summary>
+        /// <param name="name">The name for this registration.</param>
         public void WithName(string name)
         {
             this.name = name;

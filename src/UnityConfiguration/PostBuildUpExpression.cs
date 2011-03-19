@@ -8,11 +8,19 @@ namespace UnityConfiguration
         private Action<IUnityContainer, T> action;
         private Func<IUnityContainer, T, object> decoratorFunc;
 
+        /// <summary>
+        /// Call a method on the instance after it is constructed.
+        /// </summary>
+        /// <param name="action"></param>
         public void Call(Action<IUnityContainer, T> action)
         {
             this.action = action;
         }
 
+        /// <summary>
+        /// Decorate the instance with another class after it is constructed.
+        /// </summary>
+        /// <param name="func">The function used to construct the class to decorate with.</param>
         public void DecorateWith(Func<IUnityContainer, T, object> func)
         {
             decoratorFunc = func;

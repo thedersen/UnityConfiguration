@@ -19,11 +19,18 @@ namespace UnityConfiguration
             injectionMembers = new InjectionMember[0];
         }
 
+        /// <summary>
+        /// Register as singleton.
+        /// </summary>
         public void AsSingleton()
         {
             lifetimeManager = new ContainerControlledLifetimeManager();
         }
 
+        /// <summary>
+        /// Specify a name for this registration.
+        /// </summary>
+        /// <param name="name">The name for this registration.</param>
         public ILifetimePolicyExpression WithName(string name)
         {
             this.name = name;
