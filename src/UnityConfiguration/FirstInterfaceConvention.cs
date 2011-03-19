@@ -3,10 +3,16 @@ using System.Linq;
 
 namespace UnityConfiguration
 {
+    /// <summary>
+    /// Convention for registering all types by the first interface defined for the type.
+    /// </summary>
     public class FirstInterfaceConvention : IAssemblyScannerConvention
     {
         private bool ignoreBaseTypes;
 
+        /// <summary>
+        /// Determines whether or not to ignore interfaces on base types.
+        /// </summary>
         public void IgnoreInterfacesOnBaseTypes()
         {
             ignoreBaseTypes = true;
