@@ -5,18 +5,107 @@ namespace UnityConfiguration
 {
     public interface IUnityRegistry
     {
+        /// <summary>
+        /// Scan a set of assemblies.
+        /// </summary>
+        /// <param name="action">A nested closure for configuring the <see cref="IAssemblyScanner"/>.</param>
         void Scan(Action<IAssemblyScanner> action);
+        /// <summary>
+        /// Import a <see cref="IUnityRegistry"/> into this.
+        /// </summary>
+        /// <typeparam name="T">Type of the <see cref="IUnityRegistry"/> to import.</typeparam>
         void AddRegistry<T>() where T : UnityRegistry, new();
+        /// <summary>
+        /// Import a <see cref="IUnityRegistry"/> into this.
+        /// </summary>
+        /// <param name="registry">An instance of the <see cref="IUnityRegistry"/> to import.</param>
         void AddRegistry(UnityRegistry registry);
+        /// <summary>
+        /// Register a type mapping in the container.
+        /// </summary>
+        /// <param name="typeFrom">The type that will be requested.</param>
+        /// <param name="typeTo">The type that will actually be returned.</param>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
         RegistrationExpression Register(Type typeFrom, Type typeTo);
+        /// <summary>
+        /// Register a type mapping in the container.
+        /// </summary>
+        /// <typeparam name="TFrom">The type that will be requested.</typeparam>
+        /// <typeparam name="TTo">The type that will actually be returned.</typeparam>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
         RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom;
+        /// <summary>
+        /// Register a type mapping in the container by using a factory delegate.
+        /// </summary>
+        /// <typeparam name="TFrom">The type that will be requested.</typeparam>
+        /// <param name="factoryDelegate">The factory delegate that will be used to 
+        /// construct the type that will actually be returned.</param>
+        /// <returns>
+        /// An instance of a <see cref="FactoryRegistrationExpression{TFrom}"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
         FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate);
+        /// <summary>
+        /// A shortcut method to make a registered type a singleton. Mostly useful for making types registered 
+        /// by a convention.
+        /// </summary>
+        /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
+        /// <returns></returns>
         LifetimeExpression MakeSingleton<T>();
+        /// <summary>
+        /// A shortcut method to make a registered type a singleton. Mostly useful for making types registered 
+        /// by a convention.
+        /// </summary>
+        /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
+        /// <param name="namedInstance">Name of the instance.</param>
+        /// <returns></returns>
         LifetimeExpression MakeSingleton<T>(string namedInstance);
+        /// <summary>
+        /// Specify parameters that will be passed to the constructor when constructing the type.
+        /// If some of the parameters should be resolved from the container, specify its type.
+        /// </summary>
+        /// <typeparam name="T">The type to configure.</typeparam>
+        /// <param name="args">Value or type of the parameters.</param>
+        /// <returns></returns>
+        /// <example>
+        /// ConfigureCtorArgsFor&lt;Foo&gt;(42, "some string", typeof(IBar));
+        /// </example>
         ConfigureTypeExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
+        /// <summary>
+        /// Select the constructor to be used when constructing the type by specifying 
+        /// the types of the parameters in the constructor to use.
+        /// </summary>
+        /// <typeparam name="T">The type to configure.</typeparam>
+        /// <param name="args">The types of the parameters.</param>
+        /// <returns></returns>
         ConfigureTypeExpression<T> SelectConstructor<T>(params Type[] args);
+        /// <summary>
+        /// Add a <see cref="UnityContainerExtension"/> to the container.
+        /// </summary>
+        /// <typeparam name="T">Type of the extension to add.</typeparam>
+        /// <returns></returns>
         AddNewExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new();
+        /// <summary>
+        /// Confgure an extension already registered in the container.
+        /// </summary>
+        /// <typeparam name="T">Type of the extension to configure.</typeparam>
+        /// <param name="configAction">A nested closure that can be used to configure the extension.</param>
+        /// <returns></returns>
         ConfigureExtensionExpression<T> ConfigureExtension<T>(Action<T> configAction) where T : IUnityContainerExtensionConfigurator;
+        /// <summary>
+        /// Allows for some actions to be applied to a type after it is constructed.
+        /// </summary>
+        /// <typeparam name="T">The type to apply actions on.</typeparam>
+        /// <returns>
+        /// An instance of a <see cref="PostBuildUpExpression{T}"/> that holds the actions
+        /// that can be applied.
+        /// </returns>
         PostBuildUpExpression<T> AfterBuildingUp<T>() where T : class;
     }
 }
