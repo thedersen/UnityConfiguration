@@ -30,9 +30,10 @@ assemblyinfo :version => [:clean] do |asm|
 	asm.company_name = "UnityConfiguration"
 	asm.product_name = "UnityConfiguration"
 	asm.title = "UnityConfiguration"
-	asm.description = "Convention based configuration API for the Microsoft Unity IoC container"
-	asm.copyright = "Copyright (C) Thomas Pedersen"
+	asm.description = "Convention based configuration API for the Microsoft Unity IoC container."
+	asm.copyright = "Copyright (C) 2011 Thomas Pedersen"
 	asm.output_file = ASSEMBLY_INFO
+	asm.com_visible = false
 end
 
 desc "Compile solution file"
@@ -47,7 +48,7 @@ task :publish => [:compile] do
 	Dir.mkdir(OUTPUT)
 	Dir.mkdir("#{OUTPUT}/binaries")
 
-	FileUtils.cp_r FileList["src/**/#{CONFIGURATION}/*.dll"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
+	FileUtils.cp_r FileList["src/**/#{CONFIGURATION}/*.*"].exclude(/obj\//).exclude(/.Tests/), "#{OUTPUT}/binaries"
 end
 
 desc "Executes NUnit tests"
