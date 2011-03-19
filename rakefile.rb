@@ -2,7 +2,7 @@ require 'rubygems'
 require 'albacore'
 require 'rake/clean'
 
-VERSION = "1.2.0.0"
+VERSION = "1.3.0.0"
 DESCRIPTION = "Convention based configuration API for the Microsoft Unity IoC container."
 
 OUTPUT = "build"
