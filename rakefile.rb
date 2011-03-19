@@ -3,6 +3,8 @@ require 'albacore'
 require 'rake/clean'
 
 VERSION = "1.2.0.0"
+DESCRIPTION = "Convention based configuration API for the Microsoft Unity IoC container."
+
 OUTPUT = "build"
 CONFIGURATION = 'Release'
 ASSEMBLY_INFO = 'src/UnityConfiguration/Properties/AssemblyInfo.cs'
@@ -23,6 +25,7 @@ task :test => [:nunit]
 CLEAN.include(OUTPUT)
 CLEAN.include(FileList["src/**/#{CONFIGURATION}"])
 CLEAN.include("TestResult.xml")
+CLEAN.include("*.nuspec")
 
 desc "Update assemblyinfo file for the build"
 assemblyinfo :version => [:clean] do |asm|
@@ -30,7 +33,7 @@ assemblyinfo :version => [:clean] do |asm|
 	asm.company_name = "UnityConfiguration"
 	asm.product_name = "UnityConfiguration"
 	asm.title = "UnityConfiguration"
-	asm.description = "Convention based configuration API for the Microsoft Unity IoC container."
+	asm.description = DESCRIPTION
 	asm.copyright = "Copyright (C) 2011 Thomas Pedersen"
 	asm.output_file = ASSEMBLY_INFO
 	asm.com_visible = false
@@ -57,11 +60,29 @@ nunit :nunit => [:compile] do |nunit|
 
     nunit.command = "src/packages/NUnit.2.5.7.10213/Tools/nunit-console-x86.exe"
 	nunit.assemblies = tests
-end	
+end
 
 desc "Creates a NuGet packaged based on the UnityConfiguration.nuspec file"
-exec :package => [:publish] do |cmd|
+nugetpack :package => [:publish, :nuspec] do |nuget|
 	Dir.mkdir("#{OUTPUT}/nuget")
-	cmd.command = "tools/nuget.exe"
-	cmd.parameters "pack UnityConfiguration.nuspec -o #{OUTPUT}/nuget"
+	
+    nuget.command     = "tools/nuget.exe"
+    nuget.nuspec      = "UnityConfiguration.nuspec"
+	nuget.base_folder = "#{OUTPUT}/binaries/"
+    nuget.output      = "#{OUTPUT}/nuget/"
+end
+
+desc "Create the nuget package specification"
+nuspec do |nuspec|
+    nuspec.id="UnityConfiguration"
+    nuspec.version = VERSION
+    nuspec.authors = "Thomas Pedersen (thedersen)"
+    nuspec.description = DESCRIPTION
+    nuspec.language = "en-US"
+    nuspec.projectUrl = "https://github.com/thedersen/UnityConfiguration"
+	nuspec.tags = "unity ioc convention"
+	nuspec.file "UnityConfiguration.dll", "lib/net35"
+	nuspec.file "UnityConfiguration.xml", "lib/net35"
+    nuspec.dependency "Unity", "[2.0]"
+    nuspec.output_file = "UnityConfiguration.nuspec"
 end
