@@ -82,7 +82,7 @@ namespace UnityConfiguration
         /// the types of the parameters in the constructor to use.
         /// </summary>
         /// <typeparam name="T">The type to configure.</typeparam>
-        /// <param name="args">The types of the parameters.</param>
+        /// <param name="args">The types of the parameters or empty to specify default constructor.</param>
         /// <returns></returns>
         ConfigureTypeExpression<T> SelectConstructor<T>(params Type[] args);
         /// <summary>

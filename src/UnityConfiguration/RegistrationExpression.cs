@@ -28,9 +28,9 @@ namespace UnityConfiguration
         }
 
         /// <summary>
-        /// Specify a name for this registration.
+        /// Specify a name for this registration mapping.
         /// </summary>
-        /// <param name="name">The name for this registration.</param>
+        /// <param name="name">The name for this registration mapping.</param>
         public ILifetimePolicyExpression WithName(string name)
         {
             this.name = name;
