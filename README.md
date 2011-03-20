@@ -37,8 +37,8 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 			// Manually register a service
 			Register<IFooService, FooService>().WithName("Foo").AsSingleton();
 
-			// Make services a singleton
-			MakeSingleton<ISingletonService>();
+			// Make services a singleton. Useful for types registered by the scanner.
+			Register<ISingletonService>().AsSingleton();
 
 			// You can automatically configure the container to call
 			// a method on any service when they are created
