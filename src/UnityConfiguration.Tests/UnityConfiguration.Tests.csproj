@@ -76,6 +76,7 @@
     <Compile Include="FilterTests.cs" />
     <Compile Include="FirstInterfaceConventionTests.cs" />
     <Compile Include="LifetimeManagementTests.cs" />
+    <Compile Include="NamingConventionTests.cs" />
     <Compile Include="OpenGenericTests.cs" />
     <Compile Include="PostBuildUpActionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

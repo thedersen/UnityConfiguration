@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="AddAllConvention.cs" />
     <Compile Include="ConfigureExtensionExpression.cs" />
+    <Compile Include="NamingConvention.cs" />
     <Compile Include="PostBuildUpExpression.cs" />
     <Compile Include="PostBuildUpActionExtension.cs" />
     <Compile Include="AssemblyScanner.cs" />
