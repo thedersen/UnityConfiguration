@@ -6,43 +6,49 @@ namespace UnityConfiguration
     public class RegistrationExpression : Expression, ILifetimePolicyExpression
     {
         private readonly Type typeFrom;
-        private readonly Type typeTo;
+        private Type typeTo;
         private InjectionMember[] injectionMembers;
-        private LifetimeManager lifetimeManager;
+        private Func<LifetimeManager> lifetimeManagerFunc;
         private string name;
 
         public RegistrationExpression(Type typeFrom, Type typeTo)
+            : this(typeFrom, typeTo, null, () => new TransientLifetimeManager())
+        {
+        }
+
+        internal RegistrationExpression(Type typeFrom, Type typeTo, string name, Func<LifetimeManager> lifetimeManager)
         {
             this.typeFrom = typeFrom;
             this.typeTo = typeTo;
-            lifetimeManager = new TransientLifetimeManager();
+            this.name = name;
+            lifetimeManagerFunc = lifetimeManager;
             injectionMembers = new InjectionMember[0];
         }
 
         /// <summary>
-        /// Indicates that only a single instance of the binding should be created, and then
+        /// Indicates that only a single instance should be created, and then
         /// should be re-used for all subsequent requests.
         /// </summary>
         public void AsSingleton()
         {
-            lifetimeManager = new ContainerControlledLifetimeManager();
+            lifetimeManagerFunc = () => new ContainerControlledLifetimeManager();
         }
 
         /// <summary>
-        /// Indicates that instances activated via the binding should not be re-used, nor have
-        /// their lifecycle managed by Ninject.
+        /// Indicates that instances should not be re-used, nor have
+        /// their lifecycle managed by Unity.
         /// </summary>
         public void AsTransient()
         {
-            lifetimeManager = new TransientLifetimeManager();
+            lifetimeManagerFunc = () => new TransientLifetimeManager();
         }
 
         /// <summary>
-        /// Indicates that instances activated via the binding should be re-used within the same thread.
+        /// Indicates that instances should be re-used within the same thread.
         /// </summary>
         public void AsPerThread()
         {
-            lifetimeManager = new PerThreadLifetimeManager();
+            lifetimeManagerFunc = () => new PerThreadLifetimeManager();
         }
 
         /// <summary>
@@ -62,7 +68,19 @@ namespace UnityConfiguration
 
         internal override void Execute(IUnityContainer container)
         {
-            container.RegisterType(typeFrom, typeTo, name, lifetimeManager, injectionMembers);
+            if (typeFrom == null && !typeTo.IsConcrete())
+            {
+                container.Registrations.ForEach(c =>
+                {
+                    if (c.RegisteredType == typeTo)
+                        container.RegisterType(c.MappedToType, c.Name, lifetimeManagerFunc(), injectionMembers);
+
+                });
+            }
+            else
+            {
+                container.RegisterType(typeFrom, typeTo, name, lifetimeManagerFunc(), injectionMembers);
+            }
         }
     }
 }

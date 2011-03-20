@@ -15,10 +15,40 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.Register<IBarService, BarService>();
+#pragma warning disable 612,618 // obsolete
                 x.MakeSingleton<BarService>();
+#pragma warning restore 612,618
             });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
+        }
+
+        [Test]
+        public void Can_configure_concrete_types_as_singleton_using_register()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x =>
+            {
+                x.Register<IBarService, BarService>();
+                x.Register<BarService>().AsSingleton();
+            });
+
+            Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
+        }
+
+        [Test]
+        public void Can_configure_named_registration_as_singleton_using_register()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x =>
+            {
+                x.Register<IBarService, BarService>().WithName("name");
+                x.Register<BarService>().WithName("name").AsSingleton();
+            });
+
+            Assert.That(container.Resolve<IBarService>("name"), Is.SameAs(container.Resolve<IBarService>("name")));
         }
 
         [Test]
@@ -29,7 +59,23 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.Register<IBarService, BarService>();
+#pragma warning disable 612,618 // obsolete
                 x.MakeSingleton<IBarService>();
+#pragma warning restore 612,618
+            });
+
+            Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
+        }
+
+        [Test]
+        public void Can_configure_interfaces_as_singleton_using_register()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x =>
+            {
+                x.Register<IBarService, BarService>();
+                x.Register<IBarService>().AsSingleton();
             });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
@@ -43,7 +89,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Register<IFooService, FooService>());
 
             IUnityContainer childContainer = container.CreateChildContainer();
-            childContainer.Configure(x => x.MakeSingleton<FooService>());
+            childContainer.Configure(x => x.Register<FooService>().AsSingleton());
 
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
@@ -62,7 +108,7 @@ namespace UnityConfiguration
                     scan.AssemblyContaining<FooRegistry>();
                     scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
                 });
-                x.MakeSingleton<IHaveManyImplementations>();
+                x.Register<IHaveManyImplementations>().AsSingleton();
             });
 
             Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));

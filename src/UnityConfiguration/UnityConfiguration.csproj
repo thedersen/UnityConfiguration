@@ -78,7 +78,6 @@
     <Compile Include="IAssemblyScannerConvention.cs" />
     <Compile Include="IUnityRegistry.cs" />
     <Compile Include="FirstInterfaceConvention.cs" />
-    <Compile Include="LifetimeExpression.cs" />
     <Compile Include="SetAllPropertiesConvention.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="UnityExtension.cs" />

@@ -37,9 +37,19 @@ namespace UnityConfiguration
             return registrationExpression;
         }
 
+        public RegistrationExpression Register(Type type)
+        {
+            return Register(null, type);
+        }
+
         public RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom
         {
             return Register(typeof (TFrom), typeof (TTo));
+        }
+
+        public RegistrationExpression Register<T>()
+        {
+            return Register(typeof (T));
         }
 
         public FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate)
@@ -50,18 +60,17 @@ namespace UnityConfiguration
             return factoryRegistrationExpression;
         }
 
-        public LifetimeExpression MakeSingleton<T>()
+        [Obsolete("Use Register<T>().AsSingleton() instead.")]
+        public void MakeSingleton<T>()
         {
-            return MakeSingleton<T>(null);
+            MakeSingleton<T>(null);
         }
 
-        public LifetimeExpression MakeSingleton<T>(string namedInstance)
+        [Obsolete("Use Register<T>().WithName(name).AsSingleton() instead.")]
+        public void MakeSingleton<T>(string namedInstance)
         {
-            var lifetimeExpression = new LifetimeExpression(typeof (T), () => new ContainerControlledLifetimeManager(),
-                                                            namedInstance);
-            configurations.Add(lifetimeExpression);
-
-            return lifetimeExpression;
+            var registrationExpression = new RegistrationExpression(null, typeof(T), namedInstance, () => new ContainerControlledLifetimeManager());
+            registrations.Add(registrationExpression);
         }
 
         public ConfigureTypeExpression<T> ConfigureCtorArgsFor<T>(params object[] args)
