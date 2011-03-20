@@ -8,9 +8,9 @@ namespace UnityConfiguration
     /// </summary>
     public class AddAllConvention : IAssemblyScannerConvention, ILifetimePolicyExpression
     {
-        private bool asSingleton;
         private Func<Type, string> getName = t => t.Name;
         private Type interfaceType;
+        private Action<ILifetimePolicyExpression> lifetimePolicyAction = x => x.AsTransient();
 
         /// <summary>
         /// Specify the type to register multiple instances of.
@@ -41,25 +41,38 @@ namespace UnityConfiguration
         }
 
         /// <summary>
-        /// Register all types found by this convention as a singleton instance.
+        /// Indicates that only a single instance of the binding should be created, and then
+        /// should be re-used for all subsequent requests.
         /// </summary>
         public void AsSingleton()
         {
-            asSingleton = true;
+            lifetimePolicyAction = x => x.AsSingleton();
+        }
+
+        /// <summary>
+        /// Indicates that instances activated via the binding should not be re-used, nor have
+        /// their lifecycle managed by Ninject.
+        /// </summary>
+        public void AsTransient()
+        {
+            lifetimePolicyAction = x => x.AsTransient();
+        }
+
+        /// <summary>
+        /// Indicates that instances activated via the binding should be re-used within the same thread.
+        /// </summary>
+        public void AsPerThread()
+        {
+            lifetimePolicyAction = x => x.AsPerThread();
         }
 
         void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
             if (type.CanBeCastTo(interfaceType) && type.CanBeCreated())
             {
-                if (asSingleton)
-                {
-                    registry.Register(interfaceType, type).WithName(getName(type)).AsSingleton();
-                }
-                else
-                {
-                    registry.Register(interfaceType, type).WithName(getName(type));
-                }
+                var expression = registry.Register(interfaceType, type).WithName(getName(type));
+
+                lifetimePolicyAction(expression);
             }
         }
     }
