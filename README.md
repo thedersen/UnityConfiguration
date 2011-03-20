@@ -26,7 +26,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 			// namespaces using a filter.
 			Scan(scan =>
 			{
-				scan.AssemblyContaining<FooRegistry>();
+				scan.AssembliesInBaseDirectory();
 				scan.With<FirstInterfaceConvention>();
 				scan.With<AddAllConvention>()
 					.TypesImplementing<IHaveManyImplementations>();
@@ -42,7 +42,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 
 			// You can automatically configure the container to call
 			// a method on any service when they are created
-			AfterBuildingUp<IStartable>().Call((c, s) => s.Start();
+			AfterBuildingUp<IStartable>().Call((c, s) => s.Start());
 
 			// You can automatically configure the container to 
 			// decorate services when they are created
@@ -62,7 +62,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 	
 Custom conventions
 ------------------
-At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention and SetAllPropertiesConvention. If these doesn’t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
+At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention and SetAllPropertiesConvention. If these doesn’t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
 	public class CustomConvention : IAssemblyScannerConvention
 	{
 		void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
