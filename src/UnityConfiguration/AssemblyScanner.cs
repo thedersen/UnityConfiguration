@@ -35,7 +35,17 @@ namespace UnityConfiguration
             AssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory);
         }
 
+        public void AssembliesInBaseDirectory(Predicate<Assembly> predicate)
+        {
+            AssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, predicate);
+        }
+
         public void AssembliesInDirectory(string path)
+        {
+            AssembliesInDirectory(path, a => true);   
+        }
+
+        public void AssembliesInDirectory(string path, Predicate<Assembly> predicate)
         {
             if(!Directory.Exists(path))
                 return;
@@ -58,7 +68,7 @@ namespace UnityConfiguration
                     // ignore
                 }
 
-                if (assembly != null)
+                if (assembly != null && predicate(assembly))
                     Assembly(assembly);
             }
         }

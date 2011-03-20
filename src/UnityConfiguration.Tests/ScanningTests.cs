@@ -83,6 +83,20 @@ namespace UnityConfiguration
         }
 
         [Test]
+        public void Can_scan_folder_and_exclude_assemblies_by_using_a_predicate()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.AssembliesInDirectory(Environment.CurrentDirectory, a => a.GetName().Name != "UnityConfiguration.Tests");
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.IsRegistered<IFooService>(), Is.False);
+        }
+
+        [Test]
         public void Can_scan_base_folder()
         {
             var container = new UnityContainer();
@@ -94,6 +108,20 @@ namespace UnityConfiguration
                                             }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
+
+        [Test]
+        public void Can_scan_base_folder_and_exclude_assemblies_by_using_a_predicate()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+                                            {
+                                                scan.AssembliesInBaseDirectory(a => a.GetName().Name != "UnityConfiguration.Tests");
+                                                scan.With<FirstInterfaceConvention>();
+                                            }));
+
+            Assert.That(container.IsRegistered<IFooService>(), Is.False);
         }
 
         [Test]

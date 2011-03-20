@@ -25,10 +25,21 @@ namespace UnityConfiguration
         /// </summary>
         void AssembliesInBaseDirectory();
         /// <summary>
+        /// Add all assemblies in the application base directory of the current app domain to the scanner.
+        /// </summary>
+        /// <param name="predicate">A predicate used for filtering out assemblies.</param>
+        void AssembliesInBaseDirectory(Predicate<Assembly> predicate);
+        /// <summary>
         /// Add all assemblies in the specified path to the scanner.
         /// </summary>
         /// <param name="path">The path to scan for assemblies.</param>
         void AssembliesInDirectory(string path);
+        /// <summary>
+        /// Add all assemblies in the specified path to the scanner.
+        /// </summary>
+        /// <param name="path">The path to scan for assemblies.</param>
+        /// <param name="predicate">A predicate used for filtering out assemblies.</param> 
+        void AssembliesInDirectory(string path, Predicate<Assembly> predicate);
         /// <summary>
         /// Add a convention to use when scanning.
         /// </summary>
