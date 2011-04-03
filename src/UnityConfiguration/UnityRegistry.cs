@@ -17,7 +17,7 @@ namespace UnityConfiguration
             var assemblyScanner = new AssemblyScanner();
 
             action(assemblyScanner);
-
+            assemblyScanner.Exclude(t => t == GetType());
             assemblyScanner.Scan(this);
         }
 

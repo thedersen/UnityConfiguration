@@ -31,5 +31,19 @@ namespace UnityConfiguration
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
             Assert.That(container.Resolve<IBarService>(), Is.InstanceOf<BarService>());
         }
+
+        [Test]
+        public void Can_add_same_registry_twice_without_breaking_anything()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x =>
+            {
+                x.AddRegistry<FooRegistry>();
+                x.AddRegistry<FooRegistry>();
+            });
+
+            Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
+        }
     }
 }
