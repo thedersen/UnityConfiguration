@@ -3,7 +3,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class RegistrationExpression : Expression, ILifetimePolicyExpression
+    public class RegistrationExpression : Expression, IRegistrationExpression
     {
         private readonly Type typeFrom;
         private Type typeTo;
@@ -20,7 +20,7 @@ namespace UnityConfiguration
         }
 
         /// <summary>
-        /// Specify how lifetime should be managed by the controller, by specifying a <see cref="LifetimeManager"/>
+        /// Specify how lifetime should be managed by the container, by specifying a <see cref="LifetimeManager"/>.
         /// </summary>
         /// <typeparam name="T">The type of the <see cref="LifetimeManager"/> to use.</typeparam>
         public void Using<T>() where T : LifetimeManager, new()
@@ -32,14 +32,14 @@ namespace UnityConfiguration
         /// Specify a name for this registration mapping.
         /// </summary>
         /// <param name="name">The name for this registration mapping.</param>
-        public RegistrationExpression WithName(string name)
+        public IRegistrationExpression WithName(string name)
         {
             this.name = name;
             return this;
         }
 
         /// <summary>
-        /// Specify parameters that will be passed to the constructor when constructing the type.
+        /// Specify arguments that will be passed to the constructor when constructing the type.
         /// If some of the parameters should be resolved from the container, specify its type.
         /// </summary>
         /// <param name="args">Value or type of the parameters.</param>

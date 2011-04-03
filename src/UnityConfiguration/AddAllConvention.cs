@@ -11,7 +11,7 @@ namespace UnityConfiguration
     {
         private Func<Type, string> getName = t => t.Name;
         private Type interfaceType;
-        private Action<ILifetimePolicyExpression> lifetimePolicyAction = x => x.AsTransient();
+        private Action<ILifetimePolicyExpression> lifetimePolicyAction;
 
         /// <summary>
         /// Specify the type to register multiple instances of.
@@ -56,7 +56,8 @@ namespace UnityConfiguration
             {
                 var expression = registry.Register(interfaceType, type).WithName(getName(type));
 
-                lifetimePolicyAction(expression);
+                if(lifetimePolicyAction != null)
+                    lifetimePolicyAction(expression);
             }
         }
     }
