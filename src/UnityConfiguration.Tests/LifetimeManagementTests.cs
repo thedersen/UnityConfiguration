@@ -31,7 +31,7 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.Register<IBarService, BarService>();
-                x.Register<BarService>().AsSingleton();
+                x.Configure<BarService>().AsSingleton();
             });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
@@ -45,7 +45,7 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.Register<IBarService, BarService>().WithName("name");
-                x.Register<BarService>().WithName("name").AsSingleton();
+                x.Configure<BarService>().WithName("name").AsSingleton();
             });
 
             Assert.That(container.Resolve<IBarService>("name"), Is.SameAs(container.Resolve<IBarService>("name")));
@@ -75,7 +75,7 @@ namespace UnityConfiguration
             container.Configure(x =>
             {
                 x.Register<IBarService, BarService>();
-                x.Register<IBarService>().AsSingleton();
+                x.Configure<IBarService>().AsSingleton();
             });
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(container.Resolve<IBarService>()));
@@ -89,7 +89,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Register<IFooService, FooService>());
 
             IUnityContainer childContainer = container.CreateChildContainer();
-            childContainer.Configure(x => x.Register<FooService>().AsSingleton());
+            childContainer.Configure(x => x.Configure<FooService>().AsSingleton());
 
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(childContainer.Resolve<IFooService>()));
@@ -108,7 +108,7 @@ namespace UnityConfiguration
                     scan.AssemblyContaining<FooRegistry>();
                     scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
                 });
-                x.Register<IHaveManyImplementations>().AsSingleton();
+                x.Configure<IHaveManyImplementations>().AsSingleton();
             });
 
             Assert.That(container.Resolve<IHaveManyImplementations>("Implementation1"), Is.SameAs(container.Resolve<IHaveManyImplementations>("Implementation1")));

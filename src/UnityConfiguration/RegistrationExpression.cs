@@ -10,18 +10,12 @@ namespace UnityConfiguration
         private InjectionMember[] injectionMembers;
         private Func<LifetimeManager> lifetimeManagerFunc;
         private string name;
-
+        
         public RegistrationExpression(Type typeFrom, Type typeTo)
-            : this(typeFrom, typeTo, null, () => new TransientLifetimeManager())
-        {
-        }
-
-        internal RegistrationExpression(Type typeFrom, Type typeTo, string name, Func<LifetimeManager> lifetimeManager)
         {
             this.typeFrom = typeFrom;
             this.typeTo = typeTo;
-            this.name = name;
-            lifetimeManagerFunc = lifetimeManager;
+            lifetimeManagerFunc = () => new TransientLifetimeManager();
             injectionMembers = new InjectionMember[0];
         }
 

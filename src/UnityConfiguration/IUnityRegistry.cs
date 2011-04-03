@@ -31,15 +31,6 @@ namespace UnityConfiguration
         /// </returns>
         RegistrationExpression Register(Type typeFrom, Type typeTo);
         /// <summary>
-        /// Configure a type mapping in the container.
-        /// </summary>
-        /// <param name="type">The type to configure. Can be both the requested or the returned type.</param>
-        /// <returns>
-        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
-        /// further configure the registration.
-        /// </returns>
-        RegistrationExpression Register(Type type);
-        /// <summary>
         /// Register a type mapping in the container.
         /// </summary>
         /// <typeparam name="TFrom">The type that will be requested.</typeparam>
@@ -49,15 +40,7 @@ namespace UnityConfiguration
         /// further configure the registration.
         /// </returns>
         RegistrationExpression Register<TFrom, TTo>() where TTo : TFrom;
-        /// <summary>
-        /// Configure a type mapping in the container.
-        /// </summary>
-        /// <typeparam name="T">The type to configure. Can be both the requested or the returned type.</typeparam>
-        /// <returns>
-        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
-        /// further configure the registration.
-        /// </returns>
-        RegistrationExpression Register<T>();
+
         /// <summary>
         /// Register a type mapping in the container by using a factory delegate.
         /// </summary>
@@ -69,12 +52,33 @@ namespace UnityConfiguration
         /// further configure the registration.
         /// </returns>
         FactoryRegistrationExpression<TFrom> Register<TFrom>(Func<IUnityContainer, TFrom> factoryDelegate);
+
+        /// <summary>
+        /// Configure a type mapping in the container.
+        /// </summary>
+        /// <param name="type">The type to configure. Can be both the requested or the returned type.</param>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
+        RegistrationExpression Configure(Type type);
+
+        /// <summary>
+        /// Configure a type mapping in the container.
+        /// </summary>
+        /// <typeparam name="T">The type to configure. Can be both the requested or the returned type.</typeparam>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
+        RegistrationExpression Configure<T>();
+
         /// <summary>
         /// A shortcut method to make a registered type a singleton. Mostly useful for making types registered 
         /// by a convention.
         /// </summary>
         /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
-        [Obsolete("Use Register<T>().AsSingleton() instead.")]
+        [Obsolete("Use Configure<T>().AsSingleton() instead.")]
         void MakeSingleton<T>();
         /// <summary>
         /// A shortcut method to make a registered type a singleton. Mostly useful for making types registered 
@@ -82,7 +86,7 @@ namespace UnityConfiguration
         /// </summary>
         /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
         /// <param name="namedInstance">Name of the instance.</param>
-        [Obsolete("Use Register<T>().WithName(name).AsSingleton() instead.")]
+        [Obsolete("Use Configure<T>().WithName(name).AsSingleton() instead.")]
         void MakeSingleton<T>(string namedInstance);
         /// <summary>
         /// Specify parameters that will be passed to the constructor when constructing the type.
