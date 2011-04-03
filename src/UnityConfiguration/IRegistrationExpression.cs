@@ -12,4 +12,13 @@ namespace UnityConfiguration
         /// </example>
         ILifetimePolicyExpression WithConstructorArguments(params object[] args);
     }
+    
+    public interface INamedRegistrationExpression : IRegistrationExpression
+    {
+        /// <summary>
+        /// Specify a name for this registration mapping.
+        /// </summary>
+        /// <param name="name">The name for this registration mapping.</param>
+        IRegistrationExpression WithName(string name);
+    }
 }

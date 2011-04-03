@@ -86,7 +86,7 @@ namespace UnityConfiguration
             With<ScanForRegistriesConvention>();
         }
 
-        public void Exclude(Func<Type, bool> exclude)
+        public void Exclude(Predicate<Type> exclude)
         {
             filter.Excludes += exclude;
         }
@@ -106,7 +106,7 @@ namespace UnityConfiguration
             Exclude(type => type == typeof(T));
         }
 
-        public void Include(Func<Type, bool> include)
+        public void Include(Predicate<Type> include)
         {
             filter.Includes += include;
         }

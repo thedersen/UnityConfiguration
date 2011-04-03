@@ -22,12 +22,12 @@ namespace UnityConfiguration
 {
     public class CompositePredicate<T>
     {
-        private readonly List<Func<T, bool>> filters = new List<Func<T, bool>>();
-        private Func<T, bool> matchesAll = x => true;
-        private Func<T, bool> matchesAny = x => true;
-        private Func<T, bool> matchesNone = x => false;
+        private readonly List<Predicate<T>> filters = new List<Predicate<T>>();
+        private Predicate<T> matchesAll = x => true;
+        private Predicate<T> matchesAny = x => true;
+        private Predicate<T> matchesNone = x => false;
 
-        private void Add(Func<T, bool> filter)
+        private void Add(Predicate<T> filter)
         {
             matchesAll = x => filters.All(predicate => predicate(x));
             matchesAny = x => filters.Any(predicate => predicate(x));
@@ -36,7 +36,7 @@ namespace UnityConfiguration
             filters.Add(filter);
         }
 
-        public static CompositePredicate<T> operator +(CompositePredicate<T> invokes, Func<T, bool> filter)
+        public static CompositePredicate<T> operator +(CompositePredicate<T> invokes, Predicate<T> filter)
         {
             invokes.Add(filter);
             return invokes;

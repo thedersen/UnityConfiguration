@@ -3,7 +3,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public class RegistrationExpression : Expression, IRegistrationExpression
+    public class RegistrationExpression : Expression, INamedRegistrationExpression
     {
         private readonly Type typeFrom;
         private Type typeTo;
@@ -19,37 +19,21 @@ namespace UnityConfiguration
             injectionMembers = new InjectionMember[0];
         }
 
-        /// <summary>
-        /// Specify how lifetime should be managed by the container, by specifying a <see cref="LifetimeManager"/>.
-        /// </summary>
-        /// <typeparam name="T">The type of the <see cref="LifetimeManager"/> to use.</typeparam>
-        public void Using<T>() where T : LifetimeManager, new()
-        {
-            lifetimeManagerFunc = () => new T();
-        }
-
-        /// <summary>
-        /// Specify a name for this registration mapping.
-        /// </summary>
-        /// <param name="name">The name for this registration mapping.</param>
         public IRegistrationExpression WithName(string name)
         {
             this.name = name;
             return this;
         }
 
-        /// <summary>
-        /// Specify arguments that will be passed to the constructor when constructing the type.
-        /// If some of the parameters should be resolved from the container, specify its type.
-        /// </summary>
-        /// <param name="args">Value or type of the parameters.</param>
-        /// <example>
-        /// WithConstructorArguments(42, "some string", typeof(IBar));
-        /// </example>
         public ILifetimePolicyExpression WithConstructorArguments(params object[] args)
         {
             WithInjectionMembers(new InjectionConstructor(args));
             return this;
+        }
+
+        public void Using<T>() where T : LifetimeManager, new()
+        {
+            lifetimeManagerFunc = () => new T();
         }
 
         internal void WithInjectionMembers(params InjectionMember[] injectionMember)

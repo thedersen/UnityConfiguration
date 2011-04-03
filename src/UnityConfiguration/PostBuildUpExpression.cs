@@ -9,7 +9,7 @@ namespace UnityConfiguration
         private Func<IUnityContainer, T, object> decoratorFunc;
 
         /// <summary>
-        /// Call a method on the instance after it is constructed.
+        /// Call a method or a property setter on the instance after it is constructed.
         /// </summary>
         /// <param name="action"></param>
         public void Call(Action<IUnityContainer, T> action)
