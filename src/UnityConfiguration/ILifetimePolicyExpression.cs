@@ -8,6 +8,6 @@ namespace UnityConfiguration
         /// Specify how lifetime should be managed by the controller, by specifying a <see cref="LifetimeManager"/>
         /// </summary>
         /// <typeparam name="T">The type of the <see cref="LifetimeManager"/> to use.</typeparam>
-        void As<T>() where T : LifetimeManager, new();
+        void Using<T>() where T : LifetimeManager, new();
     }
 }

@@ -10,7 +10,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsSingleton(this ILifetimePolicyExpression o)
         {
-            o.As<ContainerControlledLifetimeManager>();
+            o.Using<ContainerControlledLifetimeManager>();
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsTransient(this ILifetimePolicyExpression o)
         {
-            o.As<TransientLifetimeManager>();
+            o.Using<TransientLifetimeManager>();
         }
         
         /// <summary>
@@ -27,7 +27,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsPerThread(this ILifetimePolicyExpression o)
         {
-            o.As<PerThreadLifetimeManager>();
+            o.Using<PerThreadLifetimeManager>();
         }
         
         /// <summary>
@@ -35,7 +35,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsPerResolve(this ILifetimePolicyExpression o)
         {
-            o.As<PerResolveLifetimeManager>();
+            o.Using<PerResolveLifetimeManager>();
         }
         
         /// <summary>
@@ -44,7 +44,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsExternallyControlled(this ILifetimePolicyExpression o)
         {
-            o.As<ExternallyControlledLifetimeManager>();
+            o.Using<ExternallyControlledLifetimeManager>();
         }
         
         /// <summary>
@@ -53,7 +53,7 @@ namespace UnityConfiguration
         /// </summary>
         public static void AsHierarchicalControlled(this ILifetimePolicyExpression o)
         {
-            o.As<HierarchicalLifetimeManager>();
+            o.Using<HierarchicalLifetimeManager>();
         }
     }
 }
