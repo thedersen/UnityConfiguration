@@ -10,7 +10,7 @@ You get access to the configuration api by using the extension method Configure 
 	container.Configure(x =>
 	{
 		x.AddRegistry<FooRegistry>();
-		x.AddRegistry<BarRegistry>();
+		x.AddRegistry(new BarRegistry());
 	});
 
 Working with registries
@@ -27,6 +27,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 			Scan(scan =>
 			{
 				scan.AssembliesInBaseDirectory();
+				scan.ForRegistries();
 				scan.With<FirstInterfaceConvention>();
 				scan.With<AddAllConvention>()
 					.TypesImplementing<IHaveManyImplementations>();
@@ -38,7 +39,17 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 			Register<IFooService, FooService>().WithName("Foo").AsSingleton();
 
 			// Make services a singleton. Useful for types registered by the scanner.
-			Register<ISingletonService>().AsSingleton();
+			Configure<ISingletonService>().AsSingleton();
+
+			// If you want to inject values or objects that are not registered in
+			// the container, you can do so by adding them using this statement.
+			// For instances you want the container to create, just specify the type.
+			Configure<ServiceWithCtorArgs>().WithConstructorArguments("some string", typeof (IFooService));
+
+			// Unity follows the greedy constructor pattern when creating instances.
+			// If you want to use a different constructor, you specify it by listing 
+			// the types of the arguments in the constructor you want it to use.
+			SelectConstructor<ServiceWithCtorArgs>(typeof (IFooService));
 
 			// You can automatically configure the container to call
 			// a method on any service when they are created
@@ -47,22 +58,12 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 			// You can automatically configure the container to 
 			// decorate services when they are created
 			AfterBuildingUp<IFooService>().DecorateWith((c, t) => new FooDecorator(t));
-
-			// If you want to inject values or objects that are not registered in
-			// the container, you can do so by adding them using this statement.
-			// For instances you want the container to create, just specify the type.
-			ConfigureCtorArgsFor<ServiceWithCtorArgs>("some string", typeof (IFooService));
-
-			// Unity follows the greedy constructor pattern when creating instances.
-			// If you want to use a different constructor, you specify it by listing 
-			// the types of the arguments in the constructor you want it to use.
-			SelectConstructor<ServiceWithCtorArgs>(typeof (IFooService));
 		}
 	}
 	
 Custom conventions
 ------------------
-At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention and SetAllPropertiesConvention. If these doesn’t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
+At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesn’t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
 	public class CustomConvention : IAssemblyScannerConvention
 	{
 		void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
