@@ -49,10 +49,36 @@ namespace UnityConfiguration
         /// Specify a name for this registration mapping.
         /// </summary>
         /// <param name="name">The name for this registration mapping.</param>
-        public ILifetimePolicyExpression WithName(string name)
+        public RegistrationExpression WithName(string name)
         {
             this.name = name;
             return this;
+        }
+
+        /// <summary>
+        /// Select the constructor to be used when constructing the type by specifying 
+        /// the types of the parameters in the constructor to use.
+        /// </summary>
+        /// <param name="args">The types of the parameters or empty to specify default constructor.</param>
+        /// <example>
+        /// UseConstructor(typeof(IBar));
+        /// </example>
+        public void UseConstructor(params Type[] args)
+        {
+            UseArguments(args);
+        }
+
+        /// <summary>
+        /// Specify parameters that will be passed to the constructor when constructing the type.
+        /// If some of the parameters should be resolved from the container, specify its type.
+        /// </summary>
+        /// <param name="args">Value or type of the parameters.</param>
+        /// <example>
+        /// UseArguments(42, "some string", typeof(IBar));
+        /// </example>
+        public void UseArguments(params object[] args)
+        {
+            WithInjectionMembers(new InjectionConstructor(args));
         }
 
         internal void WithInjectionMembers(params InjectionMember[] injectionMember)

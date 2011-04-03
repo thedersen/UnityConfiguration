@@ -16,7 +16,7 @@ namespace UnityConfiguration
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
                                          x.Register<IFooService, FooService>();
-                                         x.ConfigureCtorArgsFor<ServiceWithCtorArgs>("some string", typeof (IFooService));
+                                         x.Configure<ServiceWithCtorArgs>().UseArguments("some string", typeof (IFooService));
                                      });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();
@@ -32,10 +32,26 @@ namespace UnityConfiguration
             container.Configure(x =>
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
-                                         x.SelectConstructor<ServiceWithCtorArgs>();
+                                         x.Configure<ServiceWithCtorArgs>().UseConstructor();
                                      });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();
+            Assert.That(serviceWithCtorArgs.SomeString, Is.Null);
+            Assert.That(serviceWithCtorArgs.FooService, Is.Null);
+        }
+
+        [Test]
+        public void Can_select_constructor_to_use_on_named_registration()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x =>
+                                     {
+                                         x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>().WithName("name");
+                                         x.Configure<ServiceWithCtorArgs>().WithName("name").UseConstructor();
+                                     });
+
+            var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>("name");
             Assert.That(serviceWithCtorArgs.SomeString, Is.Null);
             Assert.That(serviceWithCtorArgs.FooService, Is.Null);
         }
@@ -49,7 +65,7 @@ namespace UnityConfiguration
                                      {
                                          x.Register<IServiceWithCtorArgs, ServiceWithCtorArgs>();
                                          x.Register<IFooService, FooService>();
-                                         x.SelectConstructor<ServiceWithCtorArgs>(typeof (IFooService));
+                                         x.Configure<ServiceWithCtorArgs>().UseConstructor(typeof (IFooService));
                                      });
 
             var serviceWithCtorArgs = container.Resolve<IServiceWithCtorArgs>();

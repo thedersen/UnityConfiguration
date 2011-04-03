@@ -98,7 +98,8 @@ namespace UnityConfiguration
         /// <example>
         /// ConfigureCtorArgsFor&lt;Foo&gt;(42, "some string", typeof(IBar));
         /// </example>
-        ConfigureTypeExpression<T> ConfigureCtorArgsFor<T>(params object[] args);
+        [Obsolete("Use Configure<T>().UseArguments(params object[])")]
+        void ConfigureCtorArgsFor<T>(params object[] args);
         /// <summary>
         /// Select the constructor to be used when constructing the type by specifying 
         /// the types of the parameters in the constructor to use.
@@ -106,7 +107,8 @@ namespace UnityConfiguration
         /// <typeparam name="T">The type to configure.</typeparam>
         /// <param name="args">The types of the parameters or empty to specify default constructor.</param>
         /// <returns></returns>
-        ConfigureTypeExpression<T> SelectConstructor<T>(params Type[] args);
+        [Obsolete("Use Configure<T>().UseConstructor(params Type[])")]
+        void SelectConstructor<T>(params Type[] args);
         /// <summary>
         /// Add a <see cref="UnityContainerExtension"/> to the container.
         /// </summary>

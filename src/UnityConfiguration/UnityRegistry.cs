@@ -72,17 +72,16 @@ namespace UnityConfiguration
             Configure<T>().WithName(namedInstance).AsSingleton();
         }
 
-        public ConfigureTypeExpression<T> ConfigureCtorArgsFor<T>(params object[] args)
+        [Obsolete("Use Configure<T>().UseArguments(params object[])")]
+        public void ConfigureCtorArgsFor<T>(params object[] args)
         {
-            var configurationExpression = new ConfigureTypeExpression<T>(new InjectionConstructor(args));
-            configurations.Add(configurationExpression);
-
-            return configurationExpression;
+            Configure<T>().UseArguments(args);
         }
 
-        public ConfigureTypeExpression<T> SelectConstructor<T>(params Type[] args)
+        [Obsolete("Use Configure<T>().UseConstructor(params Type[])")]
+        public void SelectConstructor<T>(params Type[] args)
         {
-            return ConfigureCtorArgsFor<T>(args);
+            Configure<T>().UseConstructor(args);
         }
 
         public AddNewExtensionExpression<T> AddExtension<T>() where T : UnityContainerExtension, new()
