@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
@@ -41,29 +42,12 @@ namespace UnityConfiguration
         }
 
         /// <summary>
-        /// Indicates that only a single instance of the binding should be created, and then
-        /// should be re-used for all subsequent requests.
+        /// Specify how lifetime should be managed by the controller, by specifying a <see cref="LifetimeManager"/>
         /// </summary>
-        public void AsSingleton()
+        /// <typeparam name="T">The type of the <see cref="LifetimeManager"/> to use.</typeparam>
+        public void As<T>() where T : LifetimeManager, new()
         {
-            lifetimePolicyAction = x => x.AsSingleton();
-        }
-
-        /// <summary>
-        /// Indicates that instances activated via the binding should not be re-used, nor have
-        /// their lifecycle managed by Ninject.
-        /// </summary>
-        public void AsTransient()
-        {
-            lifetimePolicyAction = x => x.AsTransient();
-        }
-
-        /// <summary>
-        /// Indicates that instances activated via the binding should be re-used within the same thread.
-        /// </summary>
-        public void AsPerThread()
-        {
-            lifetimePolicyAction = x => x.AsPerThread();
+            lifetimePolicyAction = x => x.As<T>();
         }
 
         void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)

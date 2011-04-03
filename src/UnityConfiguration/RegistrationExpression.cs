@@ -20,29 +20,12 @@ namespace UnityConfiguration
         }
 
         /// <summary>
-        /// Indicates that only a single instance should be created, and then
-        /// should be re-used for all subsequent requests.
+        /// Specify how lifetime should be managed by the controller, by specifying a <see cref="LifetimeManager"/>
         /// </summary>
-        public void AsSingleton()
+        /// <typeparam name="T">The type of the <see cref="LifetimeManager"/> to use.</typeparam>
+        public void As<T>() where T : LifetimeManager, new()
         {
-            lifetimeManagerFunc = () => new ContainerControlledLifetimeManager();
-        }
-
-        /// <summary>
-        /// Indicates that instances should not be re-used, nor have
-        /// their lifecycle managed by Unity.
-        /// </summary>
-        public void AsTransient()
-        {
-            lifetimeManagerFunc = () => new TransientLifetimeManager();
-        }
-
-        /// <summary>
-        /// Indicates that instances should be re-used within the same thread.
-        /// </summary>
-        public void AsPerThread()
-        {
-            lifetimeManagerFunc = () => new PerThreadLifetimeManager();
+            lifetimeManagerFunc = () => new T();
         }
 
         /// <summary>
