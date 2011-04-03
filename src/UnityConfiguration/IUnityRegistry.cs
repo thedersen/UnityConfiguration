@@ -1,9 +1,10 @@
 using System;
+using System.ComponentModel;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public interface IUnityRegistry
+    public interface IUnityRegistry : IHideObjectMembers
     {
         /// <summary>
         /// Scan a set of assemblies.
@@ -79,6 +80,7 @@ namespace UnityConfiguration
         /// </summary>
         /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
         [Obsolete("Use Configure<T>().AsSingleton() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         void MakeSingleton<T>();
         /// <summary>
         /// A shortcut method to make a registered type a singleton. Mostly useful for making types registered 
@@ -87,6 +89,7 @@ namespace UnityConfiguration
         /// <typeparam name="T">The type to make singleton. Can be both an interface or a concrete type.</typeparam>
         /// <param name="namedInstance">Name of the instance.</param>
         [Obsolete("Use Configure<T>().WithName(name).AsSingleton() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         void MakeSingleton<T>(string namedInstance);
         /// <summary>
         /// Specify parameters that will be passed to the constructor when constructing the type.
@@ -95,6 +98,7 @@ namespace UnityConfiguration
         /// <typeparam name="T">The type to configure.</typeparam>
         /// <param name="args">Value or type of the parameters.</param>
         [Obsolete("Use Configure<T>().WithConstructorArguments(params object[])")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         void ConfigureCtorArgsFor<T>(params object[] args);
         /// <summary>
         /// Select the constructor to be used when constructing the type by specifying 

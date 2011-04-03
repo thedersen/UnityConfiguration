@@ -2,7 +2,7 @@ using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
 {
-    public interface ILifetimePolicyExpression
+    public interface ILifetimePolicyExpression : IHideObjectMembers
     {
         /// <summary>
         /// Specify how lifetime should be managed by the container, by specifying a <see cref="LifetimeManager"/>.

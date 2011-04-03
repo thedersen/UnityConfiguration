@@ -6,7 +6,7 @@ namespace UnityConfiguration
     /// Interface implemented by all scanner conventions. 
     /// Defines a method to process each type the scanner finds.
     /// </summary>
-    public interface IAssemblyScannerConvention
+    public interface IAssemblyScannerConvention : IHideObjectMembers
     {
         /// <summary>
         /// Gets called for each type the <see cref="IAssemblyScanner"/> finds.

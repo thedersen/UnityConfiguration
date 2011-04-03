@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace UnityConfiguration
 {
-    public interface IAssemblyScanner
+    public interface IAssemblyScanner : IHideObjectMembers
     {
         /// <summary>
         /// Add an assembly to scan.

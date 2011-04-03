@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
@@ -61,18 +62,21 @@ namespace UnityConfiguration
         }
 
         [Obsolete("Use Configure<T>().AsSingleton() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void MakeSingleton<T>()
         {
             Configure<T>().AsSingleton();
         }
 
         [Obsolete("Use Configure<T>().WithName(name).AsSingleton() instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void MakeSingleton<T>(string namedInstance)
         {
             Configure<T>().WithName(namedInstance).AsSingleton();
         }
 
         [Obsolete("Use Configure<T>().WithConstructorArguments(params object[])")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void ConfigureCtorArgsFor<T>(params object[] args)
         {
             Configure<T>().WithConstructorArguments(args);
