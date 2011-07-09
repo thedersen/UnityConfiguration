@@ -58,7 +58,7 @@ desc "Executes NUnit tests"
 nunit :nunit => [:compile] do |nunit|
 	tests = FileList["src/**/#{CONFIGURATION}/*.Tests.dll"].exclude(/obj\//)
 
-    nunit.command = "src/packages/NUnit.2.5.7.10213/Tools/nunit-console-x86.exe"
+    nunit.command = "src/packages/NUnit.2.5.10.11092/Tools/nunit-console-x86.exe"
 	nunit.assemblies = tests
 end
 
