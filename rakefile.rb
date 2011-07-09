@@ -66,15 +66,16 @@ desc "Creates a NuGet packaged based on the UnityConfiguration.nuspec file"
 nugetpack :package => [:publish, :nuspec] do |nuget|
 	Dir.mkdir("#{OUTPUT}/nuget")
 	
-    nuget.command     = "tools/nuget.exe"
-    nuget.nuspec      = "UnityConfiguration.nuspec"
+    nuget.command = "tools/nuget.exe"
+    nuget.nuspec = "UnityConfiguration.nuspec"
 	nuget.base_folder = "#{OUTPUT}/binaries/"
-    nuget.output      = "#{OUTPUT}/nuget/"
+    nuget.output = "#{OUTPUT}/nuget/"
+	nuget.symbols = true
 end
 
 desc "Create the nuget package specification"
 nuspec do |nuspec|
-    nuspec.id="UnityConfiguration"
+    nuspec.id ="UnityConfiguration"
     nuspec.version = VERSION
     nuspec.authors = "Thomas Pedersen (thedersen)"
     nuspec.description = DESCRIPTION
@@ -82,7 +83,15 @@ nuspec do |nuspec|
     nuspec.projectUrl = "https://github.com/thedersen/UnityConfiguration"
 	nuspec.tags = "unity ioc convention"
 	nuspec.file "UnityConfiguration.dll", "lib/net35"
+	nuspec.file "UnityConfiguration.pdb", "lib/net35"
 	nuspec.file "UnityConfiguration.xml", "lib/net35"
     nuspec.dependency "Unity", "[2.0]"
     nuspec.output_file = "UnityConfiguration.nuspec"
+end
+
+desc "Pushes and publishes the NuGet package to nuget.org"
+nugetpush :release => [:package] do |nuget|
+    nuget.command = "tools/nuget.exe"
+    nuget.package = "#{OUTPUT}/nuget/UnityConfiguration.#{VERSION}.nupkg"
+    nuget.create_only = false
 end
