@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
@@ -28,6 +29,20 @@ namespace UnityConfiguration
         }
 
         /// <summary>
+        /// Specify the type to register multiple instances of.
+        /// </summary>
+        /// <param name="type">The type to register multiple instances of.</param>
+        /// <returns>
+        /// An instance of the <see cref="AddAllConvention"/> that can be used to
+        /// further configure the convention.
+        /// </returns>
+        public AddAllConvention TypesImplementing(Type type)
+        {
+            interfaceType = type;
+            return this;
+        }
+
+        /// <summary>
         /// Specify how to resolve the name for the registration.
         /// </summary>
         /// <param name="func">The function to create the name for the specified type.</param>
@@ -48,11 +63,22 @@ namespace UnityConfiguration
 
         void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
-            if (type.CanBeCastTo(interfaceType) && type.CanBeCreated())
+            Type typeFrom = null;
+            if (type.CanBeCastTo(interfaceType))
             {
-                var expression = registry.Register(interfaceType, type).WithName(getName(type));
+                typeFrom = interfaceType;
+            }
+            else if(type.ImplementsInterfaceTemplate(interfaceType))
+            {
 
-                if(lifetimePolicyAction != null)
+                typeFrom = type.GetInterfaces().FirstOrDefault(i => i.GetGenericTypeDefinition() == interfaceType);
+            }
+
+            if (typeFrom != null && type.CanBeCreated())
+            {
+                var expression = registry.Register(typeFrom, type).WithName(getName(type));
+
+                if (lifetimePolicyAction != null)
                     lifetimePolicyAction(expression);
             }
         }

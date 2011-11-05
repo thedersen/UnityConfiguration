@@ -16,6 +16,7 @@ namespace UnityConfiguration
             {
                 scan.AssemblyContaining<FooRegistry>();
                 scan.With<FirstInterfaceConvention>();
+                scan.ExcludeType<MessageHandler2>();
             }));
 
             Assert.That(container.Resolve<IHandler<Message>>(), Is.InstanceOf<MessageHandler>());
@@ -31,6 +32,7 @@ namespace UnityConfiguration
             {
                 scan.AssemblyContaining<FooRegistry>();
                 scan.With<FirstInterfaceConvention>();
+                scan.ExcludeType<MessageHandler2>();
             }));
 
             Assert.That(container.Resolve<IMapper<Message, AnotherMessage>>(), Is.InstanceOf<MessageToAnotherMessageMapper>());

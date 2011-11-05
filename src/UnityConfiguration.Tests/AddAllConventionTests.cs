@@ -31,7 +31,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing <IHaveManyImplementations>().AsSingleton();
+                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().AsSingleton();
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
@@ -63,6 +63,20 @@ namespace UnityConfiguration
             }));
 
             Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Can_add_all_implementations_of_an_open_generic()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+            {
+                scan.AssemblyContaining<FooRegistry>();
+                scan.With<AddAllConvention>().TypesImplementing(typeof(IHandler<>));
+            }));
+
+            Assert.That(container.ResolveAll<IHandler<Message>>().Count(), Is.EqualTo(2));
         }
     }
 }

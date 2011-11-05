@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace UnityConfiguration
 {
@@ -44,6 +45,14 @@ namespace UnityConfiguration
         public static bool ImplementsInterface(this Type type, Type implements)
         {
             return implements.IsInterface && type.GetInterface(implements.Name) != null;
+        }
+
+        public static bool ImplementsInterfaceTemplate(this Type type, Type templateType)
+        {
+            if (!type.IsConcrete()) 
+                return false;
+
+            return type.GetInterfaces().Any(interfaceType => interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == templateType);
         }
     }
 }
