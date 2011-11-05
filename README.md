@@ -63,7 +63,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 	
 Custom conventions
 ------------------
-At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesn’t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
+At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesnï¿½t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
 	public class CustomConvention : IAssemblyScannerConvention
 	{
 		void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
@@ -72,6 +72,26 @@ At the moment, built in conventions includes AddAllConvention, FirstInterfaceCon
 				registry.Register<IFooService, FooService>().WithName("Custom");
 		}
 	}
+	
+Release Notes
+-------------
+
+### vNext
+* Added overload to the `AddAllConvention` that allows for registering multimple types closing the same generic interface
+* Added option to scan for internal types in an assembly - `IAssemblyScanner.InternalTypes()`
+* Stromg named the assembly
+
+### v1.3
+* Documented public facing methods
+* Included the xml documentation in the NuGet package
+* Debugging symbols are available on SymbolSource.org
+* Several more overloads for adding assemblies to the scanner
+* One more overload for adding a registry that takes an instance of a UnityRegistry
+* New convention that scans for registries
+* New convention that uses an overridable naming convention for registering a type mapping
+* MakeSingleton() and MakeSingleton(string) is marked as obsolete. Use Configure().AsSingleton() or Configure().WithName(name).AsSingleton() instead
+* ConfigureCtorArgsFor(params object[] args) is marked as obsolete. Use Configure().WithConstructorArguments(params object[]) instead
+* Added Transient, PerThread, PerResolve, ExternallyControlled and HierarchicalControlled lifetime scope configuration
 
 License
 -------
