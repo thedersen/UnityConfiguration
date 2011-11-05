@@ -77,9 +77,9 @@ Release Notes
 -------------
 
 ### vNext
-* Added overload to the `AddAllConvention` that allows for registering multimple types closing the same generic interface
+* Added non-generic overload to the `AddAllConvention`
 * Added option to scan for internal types in an assembly - `IAssemblyScanner.InternalTypes()`
-* Stromg named the assembly
+* Strong named the assembly
 
 ### v1.3
 * Documented public facing methods
