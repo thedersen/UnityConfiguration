@@ -48,6 +48,11 @@ namespace UnityConfiguration
         void AssembliesInDirectory(string path, Predicate<Assembly> predicate);
 
         /// <summary>
+        /// Include internal types in an assembly when scanning.
+        /// </summary>
+        void InternalTypes();
+
+        /// <summary>
         /// Add a convention to use when scanning.
         /// </summary>
         /// <typeparam name="TConvention">The type of the convention.</typeparam>

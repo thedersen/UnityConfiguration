@@ -137,5 +137,20 @@ namespace UnityConfiguration
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
         }
+
+        [Test]
+        public void Can_scan_internal_types_when_specified()
+        {
+            var container = new UnityContainer();
+
+            container.Configure(x => x.Scan(scan =>
+            {
+                scan.AssembliesInBaseDirectory();
+                scan.InternalTypes();
+                scan.With<FirstInterfaceConvention>();
+            }));
+
+            Assert.That(container.Resolve<IInternalService>(), Is.InstanceOf<InternalService>());
+        }
     }
 }

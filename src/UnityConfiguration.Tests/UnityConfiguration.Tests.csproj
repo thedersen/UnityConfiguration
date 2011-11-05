@@ -94,10 +94,12 @@
     <Compile Include="Services\IFooService.cs" />
     <Compile Include="Services\IHandler.cs" />
     <Compile Include="Services\IHaveManyImplementations.cs" />
+    <Compile Include="Services\IInternalService.cs" />
     <Compile Include="Services\ILogger.cs" />
     <Compile Include="Services\IMapper.cs" />
     <Compile Include="Services\Implementation1.cs" />
     <Compile Include="Services\Implementation2.cs" />
+    <Compile Include="Services\InternalService.cs" />
     <Compile Include="Services\IServiceWithCtorArgs.cs" />
     <Compile Include="Services\IStartable.cs" />
     <Compile Include="Services\IStoppable.cs" />

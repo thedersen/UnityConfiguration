@@ -12,6 +12,7 @@ namespace UnityConfiguration
         private readonly List<Assembly> assemblies = new List<Assembly>();
         private readonly List<IAssemblyScannerConvention> conventions = new List<IAssemblyScannerConvention>();
         private readonly CompositeFilter<Type> filter = new CompositeFilter<Type>();
+        private Func<Assembly, IEnumerable<Type>> getTypes = a => a.GetExportedTypes();
 
         public void Assembly(Assembly assembly)
         {
@@ -73,6 +74,11 @@ namespace UnityConfiguration
             }
         }
 
+        public void InternalTypes()
+        {
+            getTypes = a => a.GetTypes();
+        }
+
         public TConvention With<TConvention>() where TConvention : IAssemblyScannerConvention, new()
         {
             var convention = new TConvention();
@@ -128,7 +134,7 @@ namespace UnityConfiguration
 
         private IEnumerable<Type> GetExportedTypes()
         {
-            return assemblies.SelectMany(a => a.GetExportedTypes()).Where(t => filter.Matches(t));
+            return assemblies.SelectMany(getTypes).Where(t => filter.Matches(t));
         }
 
         private void ApplyConventions(Type type, IUnityRegistry registry)
