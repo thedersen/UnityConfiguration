@@ -14,7 +14,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<NamedService>();
-                scan.With<NamingConvention>();
+                scan.WithNamingConvention();
             }));
 
             Assert.That(container.Resolve<INamedService>(), Is.InstanceOf<NamedService>());
@@ -30,7 +30,7 @@ namespace UnityConfiguration
                 scan.AssemblyContaining<NamedService>();
                 scan.ExcludeType<NamedService>();
 
-                scan.With<NamingConvention>().WithInterfaceName(t => "I" + t.Name + "Service");
+                scan.WithNamingConvention().WithInterfaceName(t => "I" + t.Name + "Service");
             }));
 
             Assert.That(container.Resolve<INamedService>(), Is.InstanceOf<Named>());
@@ -45,7 +45,7 @@ namespace UnityConfiguration
             {
                 scan.AssemblyContaining<NamedService>();
 
-                scan.With<NamingConvention>().WithInterfaceName(t => "IDoNotExist");
+                scan.WithNamingConvention().WithInterfaceName(t => "IDoNotExist");
             }));
 
             Assert.That(container.IsRegistered<INamedService>(), Is.False);

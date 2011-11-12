@@ -87,11 +87,6 @@ namespace UnityConfiguration
             return convention;
         }
 
-        public void ForRegistries()
-        {
-            With<ScanForRegistriesConvention>();
-        }
-
         public void Exclude(Predicate<Type> exclude)
         {
             filter.Excludes += exclude;

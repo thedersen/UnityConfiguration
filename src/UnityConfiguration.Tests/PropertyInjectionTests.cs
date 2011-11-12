@@ -14,8 +14,8 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>();
-                scan.With<SetAllPropertiesConvention>().OfType<ILogger>();
+                scan.WithFirstInterfaceConvention();
+                scan.WithSetAllPropertiesConvention().OfType<ILogger>();
             }));
 
             Assert.That(container.Resolve<FooService>().Logger, Is.Not.Null);

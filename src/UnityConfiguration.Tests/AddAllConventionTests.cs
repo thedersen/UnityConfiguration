@@ -16,7 +16,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>();
+                scan.WithAddAllConvention().TypesImplementing<IHaveManyImplementations>();
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().Count(), Is.EqualTo(2));
@@ -31,7 +31,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().AsSingleton();
+                scan.WithAddAllConvention().TypesImplementing<IHaveManyImplementations>().AsSingleton();
             }));
 
             Assert.That(container.ResolveAll<IHaveManyImplementations>().First(), Is.SameAs(container.ResolveAll<IHaveManyImplementations>().First()));
@@ -45,7 +45,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test").AsSingleton();
+                scan.WithAddAllConvention().TypesImplementing<IHaveManyImplementations>().WithName(t => "test").AsSingleton();
             }));
 
             Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.SameAs(container.Resolve<IHaveManyImplementations>("test")));
@@ -59,7 +59,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing<IHaveManyImplementations>().WithName(t => "test");
+                scan.WithAddAllConvention().TypesImplementing<IHaveManyImplementations>().WithName(t => "test");
             }));
 
             Assert.That(container.Resolve<IHaveManyImplementations>("test"), Is.Not.Null);
@@ -73,7 +73,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<AddAllConvention>().TypesImplementing(typeof(IHandler<>));
+                scan.WithAddAllConvention().TypesImplementing(typeof(IHandler<>));
             }));
 
             Assert.That(container.ResolveAll<IHandler<Message>>().Count(), Is.EqualTo(2));

@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="AddAllConvention.cs" />
     <Compile Include="ConfigureExtensionExpression.cs" />
+    <Compile Include="ConventionExtensions.cs" />
     <Compile Include="IHideObjectMembers.cs" />
     <Compile Include="IRegistrationExpression.cs" />
     <Compile Include="LifetimeExtensions.cs" />

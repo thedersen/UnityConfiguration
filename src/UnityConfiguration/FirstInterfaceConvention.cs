@@ -11,7 +11,7 @@ namespace UnityConfiguration
         private bool ignoreBaseTypes;
 
         /// <summary>
-        /// Determines whether or not to ignore interfaces on base types.
+        /// Determines whether or not to ignore interfaces on base types. Default false.
         /// </summary>
         public void IgnoreInterfacesOnBaseTypes()
         {

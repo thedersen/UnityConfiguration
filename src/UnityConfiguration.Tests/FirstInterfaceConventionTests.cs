@@ -17,7 +17,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>().IgnoreInterfacesOnBaseTypes();
+                scan.WithFirstInterfaceConvention().IgnoreInterfacesOnBaseTypes();
             }));
 
             Assert.That(container.Resolve<IMyView>(), Is.InstanceOf<MyView>());
@@ -31,7 +31,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>();
+                scan.WithFirstInterfaceConvention();
             }));
 
             Assert.That(container.Resolve<IComponent>(), Is.InstanceOf<MyView>());
@@ -45,7 +45,7 @@ namespace UnityConfiguration
             container.Configure(x => x.Scan(scan =>
             {
                 scan.AssemblyContaining<FooRegistry>();
-                scan.With<FirstInterfaceConvention>();
+                scan.WithFirstInterfaceConvention();
             }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());

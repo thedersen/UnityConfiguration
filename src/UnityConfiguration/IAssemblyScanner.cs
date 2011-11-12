@@ -58,12 +58,7 @@ namespace UnityConfiguration
         /// <typeparam name="TConvention">The type of the convention.</typeparam>
         /// <returns>An instance of the convention that can be used for configuring the convention.</returns>
         TConvention With<TConvention>() where TConvention : IAssemblyScannerConvention, new();
-
-        /// <summary>
-        /// Adds a convention that will look for and include all <see cref="UnityRegistry"/> derived classes it finds.
-        /// </summary>
-        void ForRegistries();
-
+        
         /// <summary>
         /// Exclude the specified type when scanning.
         /// </summary>

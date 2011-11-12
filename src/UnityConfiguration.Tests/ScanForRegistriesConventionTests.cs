@@ -27,7 +27,7 @@ namespace UnityConfiguration
                                             {
                                                 scan.AssemblyContaining<FooRegistry>();
                                                 scan.ForRegistries();
-                                                scan.With<FirstInterfaceConvention>();
+                                                scan.WithFirstInterfaceConvention();
                                             }));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
@@ -43,7 +43,7 @@ namespace UnityConfiguration
             {
                 scan.AssemblyContaining<FooRegistry>();
                 scan.ForRegistries();
-                scan.With<FirstInterfaceConvention>();
+                scan.WithFirstInterfaceConvention();
             });
         }
     }
