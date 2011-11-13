@@ -86,6 +86,7 @@ nuspec do |nuspec|
 	nuspec.file "UnityConfiguration.dll", "lib/net35"
 	nuspec.file "UnityConfiguration.pdb", "lib/net35"
 	nuspec.file "UnityConfiguration.xml", "lib/net35"
+	nuspec.file "..\\..\\src\\**\\*.cs", "src"
     nuspec.dependency "Unity", "2.0"
     nuspec.output_file = "UnityConfiguration.nuspec"
 end
