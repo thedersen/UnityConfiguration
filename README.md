@@ -97,4 +97,4 @@ Release Notes
 
 License
 -------
-(http://thedersen.mit-license.org/)[http://thedersen.mit-license.org/]
+http://thedersen.mit-license.org/
