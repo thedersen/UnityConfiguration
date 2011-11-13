@@ -64,6 +64,7 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 Custom conventions
 ------------------
 At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesn�t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
+
 	public class CustomConvention : IAssemblyScannerConvention
 	{
 		void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
@@ -77,6 +78,7 @@ Release Notes
 -------------
 
 ### vNext
+* Added extension methods to the `IAssemblyScanner` for easier discovery and configuration of conventions
 * Added non-generic overload to the `AddAllConvention`
 * Added option to scan for internal types in an assembly - `IAssemblyScanner.InternalTypes()`
 * Strong named the assembly
