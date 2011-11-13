@@ -82,6 +82,7 @@ Release Notes
 * Added non-generic overload to the `AddAllConvention`
 * Added option to scan for internal types in an assembly - `IAssemblyScanner.InternalTypes()`
 * Strong named the assembly
+* Switched to [Semantic Versioning](http://semver.org/)
 
 ### v1.3
 * Documented public facing methods
