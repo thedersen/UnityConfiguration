@@ -80,6 +80,7 @@ nuspec do |nuspec|
     nuspec.authors = "Thomas Pedersen (thedersen)"
     nuspec.description = DESCRIPTION
     nuspec.language = "en-US"
+    nuspec.licenseUrl = "http://thedersen.mit-license.org/"
     nuspec.projectUrl = "https://github.com/thedersen/UnityConfiguration"
 	nuspec.tags = "unity ioc convention"
 	nuspec.file "UnityConfiguration.dll", "lib/net35"
