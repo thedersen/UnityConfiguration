@@ -20,6 +20,16 @@ namespace UnityConfiguration
 
             Assert.That(MyExtension.Number, Is.EqualTo(number));
         }
+
+        [Test]
+        public void Should_return_container()
+        {
+            var container = new UnityContainer();
+
+            var result = container.Configure(x => { });
+
+            Assert.That(result, Is.SameAs(container));
+        }
     }
 
     public class MyExtension : UnityContainerExtension
