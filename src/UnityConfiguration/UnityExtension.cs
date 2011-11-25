@@ -10,13 +10,15 @@ namespace UnityConfiguration
         /// </summary>
         /// <param name="container">The container to configure.</param>
         /// <param name="expression">An expression used for configuring the container.</param>
-        public static void Configure(this IUnityContainer container, Action<IUnityRegistry> expression)
+        public static IUnityContainer Configure(this IUnityContainer container, Action<IUnityRegistry> expression)
         {
             var registry = new UnityRegistry();
 
             expression(registry);
 
             registry.Configure(container);
+
+            return container;
         }
     }
 }
