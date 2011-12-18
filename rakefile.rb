@@ -2,7 +2,7 @@ require 'rubygems'
 require 'albacore'
 require 'rake/clean'
 
-VERSION = "1.4.0"
+VERSION = "1.4.1"
 DESCRIPTION = "Convention based configuration API for the Microsoft Unity IoC container."
 
 OUTPUT = "build"
@@ -82,7 +82,7 @@ nuspec do |nuspec|
     nuspec.language = "en-US"
     nuspec.licenseUrl = "http://thedersen.mit-license.org/"
     nuspec.projectUrl = "https://github.com/thedersen/UnityConfiguration"
-	nuspec.tags = "unity ioc convention"
+	nuspec.tags = "unity ioc convention auto"
 	nuspec.file "UnityConfiguration.dll", "lib/net35"
 	nuspec.file "UnityConfiguration.pdb", "lib/net35"
 	nuspec.file "UnityConfiguration.xml", "lib/net35"
