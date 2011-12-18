@@ -77,6 +77,10 @@ At the moment, built in conventions includes AddAllConvention, FirstInterfaceCon
 Release Notes
 -------------
 
+### v1.4.1
+* Fixed #6: AssemblyScanner not bin folder friendly for web apps
+* Added #5: `IUnityContainer.Configure()` returns the `IUnityContainer` so other calls can be chained
+
 ### v1.4
 * Added extension methods to the `IAssemblyScanner` for easier discovery and configuration of conventions
 * Added non-generic overload to the `AddAllConvention`
