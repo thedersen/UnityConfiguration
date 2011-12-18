@@ -125,10 +125,10 @@ namespace UnityConfiguration
 
         public void Scan(IUnityRegistry registry)
         {
-            GetExportedTypes().ForEach(type => ApplyConventions(type, registry));
+            GetTypes().ForEach(type => ApplyConventions(type, registry));
         }
 
-        private IEnumerable<Type> GetExportedTypes()
+        private IEnumerable<Type> GetTypes()
         {
             return assemblies.SelectMany(getTypes).Where(t => filter.Matches(t));
         }
