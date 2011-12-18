@@ -33,22 +33,23 @@ namespace UnityConfiguration
 
         public void AssembliesInBaseDirectory()
         {
-            AssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            AssembliesInBaseDirectory(x => true);
         }
 
         public void AssembliesInBaseDirectory(Predicate<Assembly> predicate)
         {
             AssembliesInDirectory(AppDomain.CurrentDomain.BaseDirectory, predicate);
+            AssembliesInDirectory(AppDomain.CurrentDomain.SetupInformation.PrivateBinPath, predicate);
         }
 
         public void AssembliesInDirectory(string path)
         {
-            AssembliesInDirectory(path, a => true);   
+            AssembliesInDirectory(path, a => true);
         }
 
         public void AssembliesInDirectory(string path, Predicate<Assembly> predicate)
         {
-            if(!Directory.Exists(path))
+            if (!Directory.Exists(path))
                 return;
 
             var assemblyPaths = from file in Directory.GetFiles(path)
