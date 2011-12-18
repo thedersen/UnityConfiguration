@@ -66,7 +66,7 @@ desc "Creates a NuGet packaged based on the UnityConfiguration.nuspec file"
 nugetpack :package => [:publish, :nuspec] do |nuget|
 	Dir.mkdir("#{OUTPUT}/nuget")
 	
-    nuget.command = "tools/nuget.exe"
+    nuget.command = "src/.nuget/nuget.exe"
     nuget.nuspec = "UnityConfiguration.nuspec"
 	nuget.base_folder = "#{OUTPUT}/binaries/"
     nuget.output = "#{OUTPUT}/nuget/"
@@ -93,7 +93,7 @@ end
 
 desc "Pushes and publishes the NuGet package to nuget.org"
 nugetpush :release => [:package] do |nuget|
-    nuget.command = "tools/nuget.exe"
+    nuget.command = "src/.nuget/nuget.exe"
     nuget.package = "#{OUTPUT}/nuget/UnityConfiguration.#{VERSION}.nupkg"
     nuget.create_only = false
 end
