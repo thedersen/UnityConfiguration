@@ -1,4 +1,4 @@
-# UnityConfiguration
+# UnityConfiguration v1.4.1
 
 Convention based configuration for the Microsoft Unity IoC container. With just a few lines of code, you can now registere all your classes in the entire solution. If the built-in conventions doesn't fit your needs, it is very easy to extend with your own.
 
