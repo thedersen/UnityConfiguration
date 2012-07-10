@@ -1,9 +1,19 @@
-UnityConfiguration
-==================
-Convention based configuration API for the Unity IoC container. Heavily influenced by StructureMap.
+# UnityConfiguration
 
-Configuring your container
---------------------------
+Convention based configuration for the Microsoft Unity IoC container. With just a few lines of code, you can now registere all your classes in the entire solution. If the built-in conventions doesn't fit your needs, it is very easy to extend with your own.
+
+## Download and install
+
+UnityConfiguration is available for download on [NuGet](http://nuget.org/packages/UnityConfiguration).
+
+To install it run the following command in the [NuGet Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console).
+
+	PM> Install-Package UnityConfiguration
+   
+This will download all the binaries, and add necessary references to your project.
+
+## Configuring your container
+
 You get access to the configuration api by using the extension method Configure on the IUnityContainer interface.
 
 	var container = new UnityContainer();
@@ -13,8 +23,8 @@ You get access to the configuration api by using the extension method Configure 
 		x.AddRegistry(new BarRegistry());
 	});
 
-Working with registries
------------------------
+## Configure using registries
+
 Configuration is done in one or several registries that inherit the UnityRegistry base class.
 
 	public class FooRegistry : UnityRegistry
@@ -61,9 +71,9 @@ Configuration is done in one or several registries that inherit the UnityRegistr
 		}
 	}
 	
-Custom conventions
-------------------
-At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesn�t suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
+## Custom conventions
+
+At the moment, built in conventions includes AddAllConvention, FirstInterfaceConvention, NamingConvention, SetAllPropertiesConvention and ScanForRegistriesConvention. If these doesn't suit you, creating custom conventions is as easy as creating a class that implements the IAssemblyScanner interface.
 
 	public class CustomConvention : IAssemblyScannerConvention
 	{
@@ -74,21 +84,20 @@ At the moment, built in conventions includes AddAllConvention, FirstInterfaceCon
 		}
 	}
 	
-Release Notes
--------------
+## Release Notes
 
-### v1.4.1
+#### v1.4.1
 * Fixed #6: AssemblyScanner not bin folder friendly for web apps
 * Added #5: `IUnityContainer.Configure()` returns the `IUnityContainer` so other calls can be chained
 
-### v1.4
+#### v1.4
 * Added extension methods to the `IAssemblyScanner` for easier discovery and configuration of conventions
 * Added non-generic overload to the `AddAllConvention`
 * Added option to scan for internal types in an assembly - `IAssemblyScanner.InternalTypes()`
 * Strong named the assembly
 * Switched to [Semantic Versioning](http://semver.org/)
 
-### v1.3
+#### v1.3
 * Documented public facing methods
 * Included the xml documentation in the NuGet package
 * Debugging symbols are available on SymbolSource.org
@@ -100,6 +109,6 @@ Release Notes
 * ConfigureCtorArgsFor(params object[] args) is marked as obsolete. Use Configure().WithConstructorArguments(params object[]) instead
 * Added Transient, PerThread, PerResolve, ExternallyControlled and HierarchicalControlled lifetime scope configuration
 
-License
--------
+## License
+
 http://thedersen.mit-license.org/
