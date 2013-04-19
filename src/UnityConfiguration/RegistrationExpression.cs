@@ -52,7 +52,7 @@ namespace UnityConfiguration
 
                 });
             }
-            else
+            else if (container.IsRegistered(typeFrom, name) == false)
             {
                 container.RegisterType(typeFrom, typeTo, name, lifetimeManagerFunc(), injectionMembers);
             }
