@@ -24,7 +24,10 @@ namespace UnityConfiguration
 
         internal override void Execute(IUnityContainer container)
         {
-            container.RegisterType<TFrom>(name, new InjectionFactory(c => (object) factoryDelegate(c)));
+            if (!container.IsRegistered<TFrom>())
+            {
+                container.RegisterType<TFrom>(name, new InjectionFactory(c => (object)factoryDelegate(c)));
+            }
         }
     }
 }
