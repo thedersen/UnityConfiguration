@@ -5,11 +5,11 @@ namespace UnityConfiguration
 {
     public class RegistrationExpression : Expression, INamedRegistrationExpression
     {
-        private readonly Type typeFrom;
+        protected readonly Type typeFrom;
         private Type typeTo;
         private InjectionMember[] injectionMembers;
-        private Func<LifetimeManager> lifetimeManagerFunc;
-        private string name;
+        protected Func<LifetimeManager> lifetimeManagerFunc;
+        protected string name;
         
         public RegistrationExpression(Type typeFrom, Type typeTo)
         {

@@ -6,5 +6,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("UnityConfiguration")]
 [assembly: AssemblyCopyright("Copyright (C) 2011 Thomas Pedersen")]
 [assembly: ComVisible(false)]
-[assembly: AssemblyVersion("1.4.1")]
+[assembly: AssemblyVersion("1.4.2")]
 

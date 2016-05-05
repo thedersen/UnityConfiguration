@@ -65,6 +65,7 @@
     <Compile Include="ConfigureExtensionExpression.cs" />
     <Compile Include="ConventionExtensions.cs" />
     <Compile Include="IHideObjectMembers.cs" />
+    <Compile Include="InstanceBasedRegistrationExpression.cs" />
     <Compile Include="IRegistrationExpression.cs" />
     <Compile Include="LifetimeExtensions.cs" />
     <Compile Include="NamingConvention.cs" />

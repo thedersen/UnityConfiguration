@@ -80,5 +80,16 @@ namespace UnityConfiguration
 
             Assert.That(container.Resolve<IBarService>(), Is.SameAs(myService));
         }
+
+        [Test]
+        public void Can_register_using_object_instance()
+        {
+            var container = new UnityContainer();
+
+            var myService = new BarService();
+            container.Configure(x => x.Register<IBarService>(myService));
+
+            Assert.That(container.Resolve<IBarService>(), Is.SameAs(myService));
+        }
     }
 }
