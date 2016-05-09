@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityConfiguration", "UnityConfiguration\UnityConfiguration.csproj", "{D5FD47DA-D607-46DC-895E-2C823905D147}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityConfiguration.Tests", "UnityConfiguration.Tests\UnityConfiguration.Tests.csproj", "{337E95CC-230A-4DAC-86BE-F26998402B42}"
