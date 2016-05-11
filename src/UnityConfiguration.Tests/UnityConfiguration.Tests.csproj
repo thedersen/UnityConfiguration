@@ -118,9 +118,7 @@
     <Compile Include="TypeRegistrationTests.cs" />
     <Compile Include="UnityExtensionsConfigurationTests.cs" />
     <Compile Include="UserInterface\IMyView.cs" />
-    <Compile Include="UserInterface\MyView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="UserInterface\MyView.cs" />
     <Compile Include="UserInterface\MyView.Designer.cs">
       <DependentUpon>MyView.cs</DependentUpon>
     </Compile>

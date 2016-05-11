@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Microsoft.Practices.Unity;
 
 namespace UnityConfiguration
@@ -29,6 +30,18 @@ namespace UnityConfiguration
         public void AddRegistry(UnityRegistry registry)
         {
             registries.Add(registry);
+        }
+
+        public RegistrationExpression Register(Type typeFrom, object instanceTo)
+        {
+            var registrationExpression = new InstanceBasedRegistrationExpression(typeFrom, instanceTo);
+            registrations.Add(registrationExpression);
+            return registrationExpression;
+        }
+
+        public RegistrationExpression Register<tFrom>(object instanceTo)
+        {
+            return Register(typeof(tFrom),instanceTo);
         }
 
         public RegistrationExpression Register(Type typeFrom, Type typeTo)

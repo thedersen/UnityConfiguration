@@ -25,6 +25,28 @@ namespace UnityConfiguration
         void AddRegistry(UnityRegistry registry);
 
         /// <summary>
+        /// Register a type mapping in the container by using a concrete instance.
+        /// </summary>
+        /// <param name="typeFrom">The type that will be requested.</param>
+        /// <param name="instanceTo">The instance that will be returned.</param>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
+        RegistrationExpression Register(Type typeFrom,object instanceTo);
+
+        /// <summary>
+        /// Register a type mapping in the container by using a concrete instance.
+        /// </summary>
+        /// <typeparam name="tFrom">The type that will be requested.</typeparam>
+        /// <param name="instanceTo">The instance that will be returned.</param>
+        /// <returns>
+        /// An instance of a <see cref="RegistrationExpression"/> that can be used to 
+        /// further configure the registration.
+        /// </returns>
+        RegistrationExpression Register<tFrom>(object instanceTo) ;
+
+        /// <summary>
         /// Register a type mapping in the container.
         /// </summary>
         /// <param name="typeFrom">The type that will be requested.</param>
