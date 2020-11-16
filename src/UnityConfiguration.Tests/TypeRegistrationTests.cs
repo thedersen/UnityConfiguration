@@ -1,6 +1,6 @@
 using System;
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 using UnityConfiguration.Services;
 
 namespace UnityConfiguration

@@ -1,5 +1,5 @@
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 
 namespace UnityConfiguration
 {

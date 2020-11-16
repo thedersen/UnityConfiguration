@@ -23,7 +23,7 @@ namespace UnityConfiguration
             if (!type.IsConcrete() || !type.CanBeCreated())
                 return;
 
-            Type interfaceType = GetInterfaceType(type);
+            var interfaceType = GetInterfaceType(type);
 
             if (interfaceType != null)
                 registry.Register(interfaceType, type);
@@ -31,13 +31,13 @@ namespace UnityConfiguration
 
         private Type GetInterfaceType(Type type)
         {
-            Type[] interfaces = type.GetInterfaces();
-            Type interfaceType = interfaces.FirstOrDefault();
+            var interfaces = type.GetInterfaces();
+            var interfaceType = interfaces.FirstOrDefault();
 
             if (!ignoreBaseTypes || type.BaseType == null)
                 return interfaceType;
 
-            foreach (Type @interface in interfaces)
+            foreach (var @interface in interfaces)
             {
                 if (!type.BaseType.ImplementsInterface(@interface))
                     return @interface;

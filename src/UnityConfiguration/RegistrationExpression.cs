@@ -1,5 +1,7 @@
 using System;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Injection;
+using Unity.Lifetime;
 
 namespace UnityConfiguration
 {
@@ -8,14 +10,14 @@ namespace UnityConfiguration
         private readonly Type typeFrom;
         private Type typeTo;
         private InjectionMember[] injectionMembers;
-        private Func<LifetimeManager> lifetimeManagerFunc;
+        private Func<ITypeLifetimeManager> typeLifetimeManagerFunc;
         private string name;
         
         public RegistrationExpression(Type typeFrom, Type typeTo)
         {
             this.typeFrom = typeFrom;
             this.typeTo = typeTo;
-            lifetimeManagerFunc = () => new TransientLifetimeManager();
+            typeLifetimeManagerFunc = () => new TransientLifetimeManager();
             injectionMembers = new InjectionMember[0];
         }
 
@@ -33,7 +35,7 @@ namespace UnityConfiguration
 
         public void Using<T>() where T : LifetimeManager, new()
         {
-            lifetimeManagerFunc = () => new T();
+            typeLifetimeManagerFunc = () => (ITypeLifetimeManager) new T();
         }
 
         internal void WithInjectionMembers(params InjectionMember[] injectionMember)
@@ -48,13 +50,13 @@ namespace UnityConfiguration
                 container.Registrations.ForEach(c =>
                 {
                     if (c.RegisteredType == typeTo)
-                        container.RegisterType(c.MappedToType, c.Name, lifetimeManagerFunc(), injectionMembers);
+                        container.RegisterType(c.MappedToType, c.Name, typeLifetimeManagerFunc(), injectionMembers);
 
                 });
             }
             else
             {
-                container.RegisterType(typeFrom, typeTo, name, lifetimeManagerFunc(), injectionMembers);
+                container.RegisterType(typeFrom, typeTo, name, typeLifetimeManagerFunc(), injectionMembers);
             }
         }
     }

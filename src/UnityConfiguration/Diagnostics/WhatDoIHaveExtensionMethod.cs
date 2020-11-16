@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Registration;
 
 namespace UnityConfiguration.Diagnostics
 {
@@ -11,27 +12,26 @@ namespace UnityConfiguration.Diagnostics
         {
             var stringBuilder = new StringBuilder();
 
-            List<string> registrations = container.Registrations.Select(ToRegistrationString).ToList();
+            var registrations = container.Registrations.Select(ToRegistrationString).ToList();
             registrations.Sort();
             registrations.ForEach(s => stringBuilder.AppendLine(s));
 
             return stringBuilder.ToString();
         }
 
-        private static string ToRegistrationString(ContainerRegistration registration)
+        private static string ToRegistrationString(IContainerRegistration registration)
         {
-            return registration.RegisteredType.FullName + " - " + registration.MappedToType.FullName +
-                   Named(registration) + AsSingleton(registration);
+            return $"{registration.RegisteredType.FullName} - {registration.MappedToType.FullName}{Named(registration)}{AsSingleton(registration)}";
         }
 
-        private static string Named(ContainerRegistration registration)
+        private static string Named(IContainerRegistration registration)
         {
-            return registration.Name != null ? string.Format(" named \"{0}\"", registration.Name) : null;
+            return registration.Name != null ? $" named \"{registration.Name}\"" : null;
         }
 
-        private static string AsSingleton(ContainerRegistration registration)
+        private static string AsSingleton(IContainerRegistration registration)
         {
-            return registration.LifetimeManager != null ? " with " + registration.LifetimeManager.GetType().Name : null;
+            return registration.LifetimeManager != null ? $" with {registration.LifetimeManager.GetType().Name}" : null;
         }
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.Practices.Unity;
+using Unity.Lifetime;
 
 namespace UnityConfiguration
 {

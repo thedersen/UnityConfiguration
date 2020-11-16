@@ -1,6 +1,7 @@
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 using UnityConfiguration.Services;
+using UnityConfiguration;
 
 namespace UnityConfiguration
 {
@@ -11,6 +12,8 @@ namespace UnityConfiguration
         public void Can_configure_concrete_types_as_singleton()
         {
             var container = new UnityContainer();
+
+            UnityConfiguration.UnityExtension.Configure(container, x => x.Register<IBarService, BarService>());
 
             container.Configure(x =>
             {
@@ -85,10 +88,11 @@ namespace UnityConfiguration
         [Test]
         public void Can_make_transient_sevice_a_singleton_in_child_container()
         {
-            var container = new UnityContainer();
+            var container = new UnityContainer() as IUnityContainer;
             container.Configure(x => x.Register<IFooService, FooService>());
 
-            IUnityContainer childContainer = container.CreateChildContainer();
+            var childContainer = container.CreateChildContainer();
+            
             childContainer.Configure(x => x.Configure<FooService>().AsSingleton());
 
             Assert.That(container.Resolve<IFooService>(), Is.Not.SameAs(container.Resolve<IFooService>()));

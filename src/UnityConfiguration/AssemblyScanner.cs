@@ -58,7 +58,7 @@ namespace UnityConfiguration
                                       extension.Equals(".dll", StringComparison.OrdinalIgnoreCase)
                                 select file;
 
-            foreach (string assemblyPath in assemblyPaths)
+            foreach (var assemblyPath in assemblyPaths)
             {
                 Assembly assembly = null;
                 try

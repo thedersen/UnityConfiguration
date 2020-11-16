@@ -1,7 +1,6 @@
-using System;
 using System.Linq;
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 using UnityConfiguration.Services;
 
 namespace UnityConfiguration
@@ -75,9 +74,11 @@ namespace UnityConfiguration
 
             container.Configure(x => x.Scan(scan =>
                                             {
-                                                scan.AssembliesInDirectory(Environment.CurrentDirectory);
+                                                scan.AssembliesInDirectory(TestContext.CurrentContext.TestDirectory);
                                                 scan.With<FirstInterfaceConvention>();
                                             }));
+
+            var registration = container.Registrations.FirstOrDefault(x => x.RegisteredType == typeof(IFooService));
 
             Assert.That(container.Resolve<IFooService>(), Is.InstanceOf<FooService>());
         }
@@ -89,7 +90,7 @@ namespace UnityConfiguration
 
             container.Configure(x => x.Scan(scan =>
                                             {
-                                                scan.AssembliesInDirectory(Environment.CurrentDirectory, a => a.GetName().Name != "UnityConfiguration.Tests");
+                                                scan.AssembliesInDirectory(TestContext.CurrentContext.TestDirectory, a => a.GetName().Name != "UnityConfiguration.Tests");
                                                 scan.With<FirstInterfaceConvention>();
                                             }));
 

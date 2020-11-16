@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Extension;
 
 namespace UnityConfiguration
 {

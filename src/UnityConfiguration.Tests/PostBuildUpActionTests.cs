@@ -1,5 +1,8 @@
-using Microsoft.Practices.Unity;
+using System;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using Unity;
+using UnityConfiguration.Diagnostics;
 using UnityConfiguration.Services;
 
 namespace UnityConfiguration
