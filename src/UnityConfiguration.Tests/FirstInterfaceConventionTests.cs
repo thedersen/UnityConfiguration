@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 using UnityConfiguration.Services;
 using UnityConfiguration.UserInterface;
 

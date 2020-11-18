@@ -9,7 +9,7 @@ namespace UnityConfiguration
     /// </summary>
     public class NamingConvention : IAssemblyScannerConvention
     {
-        private Func<Type, string> getInterfaceName = t => "I" + t.Name;
+        private Func<Type, string> getInterfaceName = t => $"I{t.Name}";
 
         /// <summary>
         /// Specify how to resolve the name of the interface.
@@ -22,7 +22,7 @@ namespace UnityConfiguration
 
         void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
-            Type @interface = FindInterface(type);
+            var @interface = FindInterface(type);
 
             if(@interface != null)
                 registry.Register(@interface, type);
@@ -30,7 +30,7 @@ namespace UnityConfiguration
 
         private Type FindInterface(Type type)
         {
-            string interfaceName = getInterfaceName(type);
+            var interfaceName = getInterfaceName(type);
 
             return type.GetInterface(interfaceName);
         }

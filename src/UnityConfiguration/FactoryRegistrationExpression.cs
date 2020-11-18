@@ -1,5 +1,6 @@
 using System;
-using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Injection;
 
 namespace UnityConfiguration
 {
@@ -24,7 +25,7 @@ namespace UnityConfiguration
 
         internal override void Execute(IUnityContainer container)
         {
-            container.RegisterType<TFrom>(name, new InjectionFactory(c => (object) factoryDelegate(c)));
+            container.RegisterFactory<TFrom>(name, c => (object) factoryDelegate(c));
         }
     }
 }

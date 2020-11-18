@@ -1,5 +1,6 @@
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
+using Unity.Lifetime;
 using UnityConfiguration.Services;
 
 namespace UnityConfiguration.Diagnostics
@@ -10,22 +11,28 @@ namespace UnityConfiguration.Diagnostics
         [Test]
         public void Prints_all_configured_types()
         {
-            IUnityContainer container = new UnityContainer()
+            var container = new UnityContainer()
                 .RegisterType<IFooService, FooService>()
                 .RegisterType<IBarService, BarService>(new ContainerControlledLifetimeManager())
                 .RegisterType<IBarService, BarService>("Bar", new TransientLifetimeManager())
                 .RegisterType<IFooService, FooService>("Foo", new ContainerControlledLifetimeManager());
 
-            string report = container.WhatDoIHave();
+            var report = container.WhatDoIHave();
 
-            string expexted =
-                "Microsoft.Practices.Unity.IUnityContainer - Microsoft.Practices.Unity.IUnityContainer with ContainerLifetimeManager\r\n" +
-                "UnityConfiguration.Services.IBarService - UnityConfiguration.Services.BarService named \"Bar\" with TransientLifetimeManager\r\n" +
-                "UnityConfiguration.Services.IBarService - UnityConfiguration.Services.BarService with ContainerControlledLifetimeManager\r\n" +
-                "UnityConfiguration.Services.IFooService - UnityConfiguration.Services.FooService\r\n" +
-                "UnityConfiguration.Services.IFooService - UnityConfiguration.Services.FooService named \"Foo\" with ContainerControlledLifetimeManager\r\n";
+            var expexted = new string[]
+            {
+                "Unity.IUnityContainer - Unity.UnityContainer with ContainerLifetimeManager",
+                "UnityConfiguration.Services.IBarService - UnityConfiguration.Services.BarService named \"Bar\" with TransientLifetimeManager",
+                "UnityConfiguration.Services.IBarService - UnityConfiguration.Services.BarService with ContainerControlledLifetimeManager",
+                "UnityConfiguration.Services.IFooService - UnityConfiguration.Services.FooService with TransientLifetimeManager",
+                "UnityConfiguration.Services.IFooService - UnityConfiguration.Services.FooService named \"Foo\" with ContainerControlledLifetimeManager",
+            };
 
-            Assert.That(report, Is.EqualTo(expexted));
+            foreach (var s in expexted)
+            {
+                Assert.IsTrue(report.Contains(s));
+            }
+
         }
     }
 }

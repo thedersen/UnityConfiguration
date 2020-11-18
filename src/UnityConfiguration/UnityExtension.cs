@@ -1,12 +1,12 @@
 ﻿using System;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace UnityConfiguration
 {
     public static class UnityExtension
     {
         /// <summary>
-        /// Configure an instance of an <see cref="IUnityContainer"/>.
+        /// Configure an instance of an <see cref="Unity.IUnityContainer"/>.
         /// </summary>
         /// <param name="container">The container to configure.</param>
         /// <param name="expression">An expression used for configuring the container.</param>

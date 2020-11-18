@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Practices.Unity;
+using Unity.Injection;
 
 namespace UnityConfiguration
 {
@@ -26,10 +26,10 @@ namespace UnityConfiguration
 
         void IAssemblyScannerConvention.Process(Type type, IUnityRegistry registry)
         {
-            IEnumerable<PropertyInfo> properties =
+            var properties =
                 type.GetProperties().Where(p => p.CanWrite && p.PropertyType == interfaceType);
 
-            foreach (PropertyInfo property in properties)
+            foreach (var property in properties)
             {
                 registry.Register(null, type).WithInjectionMembers(new InjectionProperty(property.Name));
             }

@@ -1,7 +1,8 @@
 using System;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
+using Unity;
+using Unity.Builder;
+using Unity.Extension;
+using Unity.Strategies;
 
 namespace UnityConfiguration
 {
@@ -32,11 +33,9 @@ namespace UnityConfiguration
             this.container = container;
         }
 
-        public override void PostBuildUp(IBuilderContext context)
+        public override void PostBuildUp(ref BuilderContext context)
         {
-            var obj = context.Existing as T;
-
-            if (obj != null)
+            if (context.Existing is T obj)
                 action(container, obj);
         }
     }

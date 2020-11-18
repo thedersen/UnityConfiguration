@@ -1,5 +1,5 @@
-using Microsoft.Practices.Unity;
 using NUnit.Framework;
+using Unity;
 
 namespace UnityConfiguration
 {
@@ -30,7 +30,7 @@ namespace UnityConfiguration
                 scan.AssemblyContaining<NamedService>();
                 scan.ExcludeType<NamedService>();
 
-                scan.WithNamingConvention().WithInterfaceName(t => "I" + t.Name + "Service");
+                scan.WithNamingConvention().WithInterfaceName(t => $"I{t.Name}Service");
             }));
 
             Assert.That(container.Resolve<INamedService>(), Is.InstanceOf<Named>());
